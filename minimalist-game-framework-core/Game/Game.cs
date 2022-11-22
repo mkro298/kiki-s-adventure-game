@@ -1,57 +1,76 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 
 class Game
 {
     public static readonly string Title = "Minimalist Game Framework";
     public static readonly Vector2 Resolution = new Vector2(1275, 750);
-    Block[] blocks = new Block[10];
+    readonly Font font = Engine.LoadFont("font.ttf", 20);
+    Block[] blocks = new Block[211];
+
+    int scroll = 0;
 
     public Game()
     {
-        //Engine.DrawLine(Vector2.Zero, new Vector2(1275, 750), Color.White);
+        StreamReader sr = new StreamReader("assets/env coords.txt");
+        for (int i = 0; i < blocks.Length; i++)
+        {
+            string line = sr.ReadLine();
+            string[] nums = line.Split(' ');
+            
+            blocks[i] = new Block(Int32.Parse(nums[0]), Int32.Parse(nums[1]), Int32.Parse(nums[2]));
+        }
+        sr.Close();
     }
 
     public void Update()
     {
         Engine.DrawRectSolid(new Bounds2(Vector2.Zero, new Vector2(1275, 750)), Color.White);
 
-        blocks[0] = new Block(0, 9);
-        blocks[1] = new Block(1, 8);
-        blocks[2] = new Block(2, 7);
-        blocks[3] = new Block(3, 6);
-        blocks[4] = new Block(4, 5);
-        blocks[5] = new Block(5, 4);
-        blocks[6] = new Block(6, 3);
-        blocks[7] = new Block(7, 2);
-        blocks[8] = new Block(8, 1);
-        blocks[9] = new Block(9, 0);
+        if (Engine.GetKeyDown(Key.R))
+        {
+            Engine.DrawRectSolid(new Bounds2(Vector2.Zero, new Vector2(100, 100)), Color.Red);
+            StreamReader sr = new StreamReader("assets/env coords.txt");
+            for (int i = 0; i < blocks.Length; i++)
+            {
+                string line = sr.ReadLine();
+                string[] nums = line.Split(' ');
+
+                blocks[i] = new Block(Int32.Parse(nums[0]), Int32.Parse(nums[1]), Int32.Parse(nums[2]));
+            }
+            sr.Close();
+        }
 
         for (int i = 0; i < blocks.Length; i++)
-        {
-            blocks[i].draw();
+        { 
+            blocks[i].draw(scroll);
         }
-        /*
-        int count = 0;
-        for (int x = 0; x < blocks.Length; x++)
-        {
-            for (int y = 0; y < blocks[x].Length; y++)
-            {
-                if (env[x][y] == 1)
-                {
 
-                }
-            }
+        int speed = 5;
+
+        if (Engine.GetKeyHeld(Key.Left) && scroll <= -1)
+        {
+            scroll += speed;
         }
-        */
+
+        if (Engine.GetKeyHeld(Key.Right))
+        {
+            scroll -= speed;
+        }
+
+        Engine.DrawRectSolid(new Bounds2(new Vector2(300, 575), new Vector2(100, 100)), Color.Red);
     }
-    
+
 }
 
 class Block
 {
+    readonly Font font = Engine.LoadFont("font.ttf", 20);
     int leftbound;
     int upperbound;
+    int rightbound;
+    int tileType;
     Vector2 coordinates;
     int blockSize = 75;
 
@@ -59,19 +78,29 @@ class Block
     {
         leftbound = 0;
         upperbound = 0;
+        tileType = 0;
         coordinates = Vector2.Zero;
     }
     public Block(double left, double upper)
     {
         leftbound = (int)left;
         upperbound = (int)upper;
+        tileType = 0;
         coordinates = new Vector2((int)left / blockSize, (int)upper / blockSize);
     }
     public Block(int x, int y)
     {
-        coordinates = new Vector2(x, y);
         leftbound = x * blockSize;
         upperbound = y * blockSize;
+        tileType = 0;
+        coordinates = new Vector2(x, y);
+    }
+    public Block(int x, int y, int tileType)
+    {
+        leftbound = x * blockSize;
+        upperbound = y * blockSize;
+        this.tileType = tileType;
+        coordinates = new Vector2(x, y);
     }
 
     public int getLeftbound()
@@ -82,9 +111,37 @@ class Block
     {
         return upperbound;
     }
-    
+    public int getRightbound()
+    {
+        return leftbound + blockSize;
+    }
+
     public void draw()
     {
-        Engine.DrawRectSolid(new Bounds2(new Vector2(leftbound, upperbound), new Vector2(blockSize, blockSize)), Color.Black);
+        Color color = Color.Black;
+        if (tileType == 0)
+        {
+            color = Color.Aqua;
+        }
+        if (tileType == 1)
+        {
+            color = Color.Coral;
+        }
+        Engine.DrawRectSolid(new Bounds2(new Vector2(leftbound, upperbound), new Vector2(blockSize, blockSize)), color);
+        Engine.DrawString(coordinates.ToString() + tileType.ToString(), new Vector2(leftbound, upperbound), Color.Black, font);
+    }
+    public void draw(int scroll)
+    {
+        Color color = Color.Black;
+        if (tileType == 0)
+        {
+            color = Color.Aqua;
+        }
+        if (tileType == 1)
+        {
+            color = Color.Coral;
+        }
+        Engine.DrawRectSolid(new Bounds2(new Vector2(leftbound + scroll, upperbound), new Vector2(blockSize, blockSize)), color);
+        Engine.DrawString(coordinates.ToString() + tileType.ToString(), new Vector2(leftbound + scroll, upperbound), Color.Black, font);
     }
 }
