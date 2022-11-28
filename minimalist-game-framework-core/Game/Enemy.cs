@@ -20,9 +20,9 @@ class Enemy
 
     }
 
-    public void runEnemy()
+    public void runEnemyCode()
     {
-        
+        //TODO
     }
 
     public void moveEnemy(Vector2 minPos, Vector2 maxPos)
