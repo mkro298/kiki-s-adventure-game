@@ -7,7 +7,7 @@ class Player
     public static readonly Vector2 Resolution = new Vector2(640, 480);
     // Define some constants controlling animation speed:
     static readonly float Framerate = 10;
-    static readonly float WalkSpeed = 50;
+    static readonly float WalkSpeed = 70;
 
     //Load basic sprite sheet
     Texture tex = Engine.LoadTexture("basic.png");
@@ -16,7 +16,7 @@ class Player
 
     float frames = 6.0f;
     int bound = 100;
-    int currP = 2;
+    int currP = 0;
 
     // Keep track of K's state:
     Vector2 kPos = Resolution / 2;
@@ -87,6 +87,10 @@ class Player
             yCoord = currP * 100;
             frames = 12.0f;
             bound = 200;
+            if (kFaceLeft)
+            {
+                kPos.X -= 100f;
+            }
 
         }
 
@@ -98,5 +102,9 @@ class Player
         Vector2 kDrawPos =  kPos + new Vector2(-8, -8);
         TextureMirror kMirror = kFaceLeft ? TextureMirror.Horizontal : TextureMirror.None;
         Engine.DrawTexture(texK, kDrawPos, source: kFrameBounds, mirror: kMirror);
+        if (kFaceLeft&&bound==200)
+        {
+            kPos.X += 100f;
+        }
     }
 }
