@@ -5,7 +5,7 @@ class Game
 {
     public static readonly string Title = "Minimalist Game Framework";
     public static readonly Vector2 Resolution = new Vector2(640, 480);
-    Player a = new Player();
+    Player b = new Player();
 
 
     public Game()
@@ -13,6 +13,6 @@ class Game
     }
     public void Update()
     {
-        a.Update(); 
+        b.Update(); 
     }
 }
