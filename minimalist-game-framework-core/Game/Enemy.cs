@@ -13,11 +13,13 @@ class Enemy
     Boolean enemyHit = false;
     Boolean isAlive = true;
     int framesDrawn = 0;
+    
+    int power = 0;
 
 
-    public Enemy()
+    public Enemy(int p)
     {
-
+        power = p;
     }
 
     public void runEnemyCode()
