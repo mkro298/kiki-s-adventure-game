@@ -16,7 +16,7 @@ class Player
 
     float frames = 6.0f;
     int bound = 100;
-    int currP = 0;
+    int currP = 2;
 
     // Keep track of K's state:
     Vector2 kPos = Resolution / 2;
@@ -30,6 +30,13 @@ class Player
     {
     }
     int yCoord = 0;
+
+    //assumes enemy is hit by player through powers or through inhaling 
+    public void enemyHit()
+    {
+        //currP = enemys power
+        //points+= depending on whether inhalation or powers were used 
+    }
     public void Update()
     {
         texK = tex;
