@@ -205,4 +205,33 @@ static partial class Engine
 
     [DllImport("user32.dll")]
     private static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
+    
+
+    public static void reload()
+    {
+        string targetBase = Directory.GetCurrentDirectory();
+        string sourceBase = targetBase;
+
+        while (true)
+        {
+            // Figure out if we're in the project's base directory:
+            if (File.Exists(Path.Combine(sourceBase, "Game.sln")) &&
+                Directory.Exists(Path.Combine(sourceBase, "Assets")))
+            {
+                MirrorDirectory(Path.Combine(sourceBase, "Assets"), Path.Combine(targetBase, "Assets"), true);
+                break;
+            }
+
+            // Try again in the parent directory, stopping when we run out of places to look:
+            DirectoryInfo parent = Directory.GetParent(sourceBase);
+            if (parent == null)
+            {
+                break;
+            }
+            else
+            {
+                sourceBase = parent.FullName;
+            }
+        }
+    }
 }
