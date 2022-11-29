@@ -6,6 +6,7 @@ class Game
 {
     public static readonly string Title = "Minimalist Game Framework";
     public static readonly Vector2 Resolution = new Vector2(1275, 750);
+    readonly Texture background = Engine.LoadTexture("Kirby red level background.png");
     readonly Font font = Engine.LoadFont("font.ttf", 20);
     static int numBlocks = 202;
     Block[] blocks;
@@ -15,13 +16,13 @@ class Game
     
     public Game()
     {
+        Engine.DrawTexture(background, Vector2.Zero);
         reload();
         Enemy c = new Enemy(0, b);
     }
     public void Update()
     {
-        Engine.DrawRectSolid(new Bounds2(Vector2.Zero, new Vector2(1275, 750)), Color.White);
-
+        Engine.DrawTexture(background, Vector2.Zero);
         if (Engine.GetKeyDown(Key.R))
         {
             reload();
