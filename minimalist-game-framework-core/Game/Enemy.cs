@@ -15,17 +15,32 @@ class Enemy
     int framesDrawn = 0;
     
     int power = 0;
+    Player pl;
 
 
-    public Enemy(int p)
+    public Enemy(int p, Player a)
     {
         power = p;
+        pl = a;
+    }
+
+    public void hitPlayer()
+    {
+        if (pl.inhale == true&&enemyPos.X-pl.kPos.X<100)
+        {
+            pl.enemyHit(this);
+        }
     }
 
     public void runEnemyCode()
     {
         //TODO
     }
+    public int returnPower()
+    {
+        return power;
+    }
+
 
     public void moveEnemy(Vector2 minPos, Vector2 maxPos)
     {

@@ -16,6 +16,7 @@ class Game
     public Game()
     {
         reload();
+        Enemy c = new Enemy(0, b);
     }
     public void Update()
     {
