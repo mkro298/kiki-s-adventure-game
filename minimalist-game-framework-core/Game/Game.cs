@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.IO;
 using System.Collections.Generic;
 
@@ -11,12 +11,12 @@ class Game
     Block[] blocks;
     
     int scroll = 0;
-
+    Player b = new Player();
+    
     public Game()
     {
         reload();
     }
-
     public void Update()
     {
         Engine.DrawRectSolid(new Bounds2(Vector2.Zero, new Vector2(1275, 750)), Color.White);
@@ -25,7 +25,9 @@ class Game
         {
             reload();
         }
-
+        
+        b.Update(); 
+        
         for (int i = 0; i < blocks.Length; i++)
         { 
             blocks[i].draw(scroll);
