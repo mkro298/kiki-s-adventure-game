@@ -10,6 +10,7 @@ class Game
 
     public Game()
     {
+        Enemy c = new Enemy(0, b);
     }
     public void Update()
     {
