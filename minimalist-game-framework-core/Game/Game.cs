@@ -26,7 +26,7 @@ class Game
         {
             reload();
         }
-        
+        c.runEnemyCode();
         b.Update(); 
         
         for (int i = 0; i < blocks.Length; i++)
