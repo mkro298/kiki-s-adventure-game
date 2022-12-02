@@ -69,14 +69,13 @@ class Player
             // For moving up
             if (Engine.GetKeyHeld(Key.W))
             {
-                kVel.Y = 5
+            kVel.Y = 5;
                 kVel.Y += 10;
                 kPos.Y -= kVel.Y;
                 kIdle = false;
                 yCoord = 200;
             frames = 6.0f;
             bound = 100;
-            inhale = true;
             }
             // Otherwise, full enable gravity
             else if(kPos.Y < 380)
@@ -90,6 +89,7 @@ class Player
                 yCoord = 100;
             frames = 6.0f;
             bound = 100;
+            inhale = true;
         }
         if (Engine.GetKeyHeld(Key.P))
         {
@@ -98,7 +98,7 @@ class Player
             yCoord = currP * 100;
             frames = 12.0f;
             bound = 200;
-            inhale = true;
+           // inhale = true;
             if (kFaceLeft)
             {
                 kPos.X -= 100f;

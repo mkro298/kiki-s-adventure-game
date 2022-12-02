@@ -14,7 +14,7 @@ class Enemy
     readonly Texture enemy = Engine.LoadTexture("ENEMY.png");
 
     //enemy state
-    Vector2 enemyPos = new Vector2(400f, 200.0f);
+    Vector2 enemyPos = new Vector2(300f, 360.0f);
     Boolean movingLeft = false;
     float eFrameIndex = 0;
 
@@ -38,20 +38,21 @@ class Enemy
 
     public void hitPlayer()
     {
-        if (pl.inhale == true&&enemyPos.X-pl.kPos.X<100)
+        if (pl.inhale == true && Math.Abs(enemyPos.X-pl.kPos.X)<200 && Math.Abs(enemyPos.Y-pl.kPos.Y)<200)
         {
-            pl.enemyHit(this);
+           pl.enemyHit(this);
         }
     }
 
     public void runEnemyCode()
     {
+        hitPlayer();
         //animation
         eFrameIndex = (eFrameIndex + Engine.TimeDelta * Framerate) % 12;
         Bounds2 eFrameBounds = new Bounds2(((int)eFrameIndex) * 100,yCoord, 100, 100);
 
         //draw sprite
-        Vector2 eDrawPos = enemyPos + new Vextor2(-8, -8);
+        Vector2 eDrawPos = enemyPos + new Vector2(-8, -8);
         TextureMirror eMirror = movingLeft ? TextureMirror.Horizontal : TextureMirror.None;
         Engine.DrawTexture(enemy, eDrawPos, source: eFrameBounds, mirror: eMirror);
     }

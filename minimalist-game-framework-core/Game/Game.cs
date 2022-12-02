@@ -8,17 +8,17 @@ class Game
     public static readonly Vector2 Resolution = new Vector2(1275, 750);
     readonly Texture background = Engine.LoadTexture("Kirby red level background.png");
     readonly Font font = Engine.LoadFont("font.ttf", 20);
-    readonly Texture background = Engine.LoadTexture("Kirby red level background.png");
     static int numBlocks = 202;
     Block[] blocks;
     int scroll = 0;
     Player b = new Player();
+    Enemy c;
     
     public Game()
     {
         Engine.DrawTexture(background, Vector2.Zero);
         reload();
-        Enemy c = new Enemy(0, b);
+        c = new Enemy(2, b);
     }
     public void Update()
     {
@@ -28,7 +28,7 @@ class Game
             reload();
         }
         c.runEnemyCode();
-        b.Update(); 
+        b.Update();
         
         for (int i = 0; i < blocks.Length; i++)
         { 
