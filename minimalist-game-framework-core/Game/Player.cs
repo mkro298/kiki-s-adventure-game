@@ -20,6 +20,7 @@ class Player
 
     // Keep track of K's state:
     public Vector2 kPos = Resolution / 2;
+    public Vector2 kVel = new Vector2(WalkSpeed, 0);
     bool kFaceLeft = false;
     float kFrameIndex = 0;
 
@@ -68,13 +69,20 @@ class Player
             // For moving up
             if (Engine.GetKeyHeld(Key.W))
             {
-                kPos.Y -= Engine.TimeDelta * WalkSpeed;
+                kVel.Y = 5
+                kVel.Y += 10;
+                kPos.Y -= kVel.Y;
                 kIdle = false;
                 yCoord = 200;
             frames = 6.0f;
             bound = 100;
             inhale = true;
-        }
+            }
+            // Otherwise, full enable gravity
+            else if(kPos.Y < 380)
+            {
+                kPos.Y += kVel.Y * Engine.TimeDelta + 10;
+            }
             // For inhaling
             if (Engine.GetKeyHeld(Key.Space))
             {
