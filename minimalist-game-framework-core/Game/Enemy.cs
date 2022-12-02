@@ -47,6 +47,22 @@ class Enemy
     public void runEnemyCode()
     {
         hitPlayer();
+        if (movingLeft)
+        {
+            enemyPos.X--;
+        }
+        else
+        {
+            enemyPos.X++;
+        }
+        if (enemyPos.X == (200))
+        {
+            movingLeft = false;
+        }
+        if (enemyPos.X == 400)
+        {
+            movingLeft = true;
+        }
         //animation
         eFrameIndex = (eFrameIndex + Engine.TimeDelta * Framerate) % 12;
         Bounds2 eFrameBounds = new Bounds2(((int)eFrameIndex) * 100,yCoord, 100, 100);
@@ -62,7 +78,7 @@ class Enemy
     }
 
 
-    public void moveEnemy(Vector2 minPos, Vector2 maxPos)
+   /* public void moveEnemy(Vector2 minPos, Vector2 maxPos)
     {
         if(enemyPos.X - 10f < minPos.X)
         {
@@ -83,4 +99,5 @@ class Enemy
         Engine.DrawTexture(enemy, enemyPos, null, new Vector2(150.0f, 250.0f));
         framesDrawn++;
     }
+   */
 }
