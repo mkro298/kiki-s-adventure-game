@@ -94,6 +94,11 @@ class Game
             
             menuButtons();
         }
+        if (c.isAlive)
+        {
+            c.runEnemyCode();
+        }
+        b.Update();
 
         //game over screen
         else if (index == 4)
@@ -128,7 +133,7 @@ class Game
         if (menuOpen) {
 
             openMenu();
-        
+
         }
         
     }
