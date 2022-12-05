@@ -1,4 +1,5 @@
-﻿using System;
+using System;
+using System.IO;
 using System.Collections.Generic;
 
 class Game
@@ -28,11 +29,20 @@ class Game
     Texture infoButton = Engine.LoadTexture("Instructions Button.png");
     Texture quit = Engine.LoadTexture("Quit Button.png");
 
-
+    readonly Texture background = Engine.LoadTexture("Kirby red level background.png");
+    readonly Font font = Engine.LoadFont("font.ttf", 20);
+    static int numBlocks = 202;
+    Block[] blocks;
+    int scroll = 0;
+    Player b = new Player();
+    Enemy c;
+    
     public Game()
     {
+        Engine.DrawTexture(background, Vector2.Zero);
+        reload();
+        c = new Enemy(2, b);
     }
-
     public void Update()
     {
         //start screen
@@ -56,8 +66,33 @@ class Game
         
         //level 1
         }else if (index == 3) {
-            menuButtons();
+            
+            Engine.DrawTexture(background, Vector2.Zero);
+            if (Engine.GetKeyDown(Key.R))
+            {
+                reload();
+            }
+            c.runEnemyCode();
+            b.Update();
 
+            for (int i = 0; i < blocks.Length; i++)
+            { 
+                blocks[i].draw(scroll);
+            }
+
+            int speed = 5;
+
+            if (Engine.GetKeyHeld(Key.Left) && scroll <= -1)
+            {
+                scroll += speed;
+            }
+
+            if (Engine.GetKeyHeld(Key.Right) && scroll >= -7425)
+            {
+                scroll -= speed;
+            }
+            
+            menuButtons();
         }
 
         //game over screen
@@ -203,4 +238,18 @@ class Game
         }
     }
 
+    private void reload()
+    {
+        Engine.reload();
+        StreamReader sr = new StreamReader("assets/env coords.txt");
+        blocks = new Block[numBlocks];
+        for (int i = 0; i < blocks.Length; i++)
+        {
+            string line = sr.ReadLine();
+            string[] nums = line.Split(' ');
+
+            blocks[i] = new Block(Int32.Parse(nums[0]), Int32.Parse(nums[1]), Int32.Parse(nums[2]));
+        }
+        sr.Close();
+    }
 }
