@@ -15,6 +15,9 @@ class Game
     Boolean menuOpen = false; // tells us if menu is open or not
 
     Stack<String> screens = new Stack<String>();
+    Double time = 0;
+
+    Music music = Engine.LoadMusic("Kiki.mp3");
 
     //textures for screens
     Texture start = Engine.LoadTexture("start.png");
@@ -46,10 +49,18 @@ class Game
         Engine.DrawTexture(background, Vector2.Zero);
         reload();
         enemy = new Enemy(2, player);
+        
+        //plays music
+        if (time % 125.0 == 0)
+        {
+            Engine.PlayMusic(music);
+            time = 0;
+        }
     }
 
     public void Update()
     {
+        time += 0.016;
 
         //start screen
         if (index == 0)
@@ -61,6 +72,7 @@ class Game
             }
 
             //1st instructions screen
+
         }
         else if (index == 1)
         {
