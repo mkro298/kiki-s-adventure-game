@@ -7,6 +7,9 @@ class Game
     public static readonly string Title = "Minimalist Game Framework";
     public static readonly Vector2 Resolution = new Vector2(1275, 750);
 
+    public static int speed = 5;
+    int scroll = 0;
+
     int index = 0; // keeps track of current screen
     Boolean win = false; // tells whether player passed the level
     Boolean menuOpen = false; // tells us if menu is open or not
@@ -32,73 +35,87 @@ class Game
     readonly Texture background = Engine.LoadTexture("Kirby red level background.png");
     readonly Font font = Engine.LoadFont("font.ttf", 20);
     static int numBlocks = 202;
-    Block[] blocks;
-    int scroll = 0;
-    Player b = new Player();
-    Enemy c;
-    
+
+    static Block[] blocks;
+    Player player = new Player(blocks);
+    Enemy enemy;
+
+
     public Game()
     {
         Engine.DrawTexture(background, Vector2.Zero);
         reload();
-        c = new Enemy(2, b);
+        enemy = new Enemy(2, player);
     }
+
     public void Update()
     {
+
         //start screen
         if (index == 0)
         {
             Engine.DrawTexture(start, Vector2.Zero);
-            if ((Engine.GetMouseButtonDown(MouseButton.Left))&&(!menuOpen))
+            if ((Engine.GetMouseButtonDown(MouseButton.Left)) && (!menuOpen))
             {
                 index++;
             }
-        
-        //1st instructions screen
-        }else if (index == 1) {
+
+            //1st instructions screen
+        }
+        else if (index == 1)
+        {
             arrowButtons();
             menuButtons();
-        
-        //2nd instructions screen
-        }else if (index == 2) {
+
+            //2nd instructions screen
+        }
+        else if (index == 2)
+        {
             arrowButtons();
             menuButtons();
-        
-        //level 1
-        }else if (index == 3) {
-            
+
+            //level 1
+        }
+        else if (index == 3)
+        {
+
             Engine.DrawTexture(background, Vector2.Zero);
             if (Engine.GetKeyDown(Key.R))
             {
                 reload();
             }
-            c.runEnemyCode();
-            b.Update();
+            enemy.runEnemyCode();
+            player.Update(scroll);
 
             for (int i = 0; i < blocks.Length; i++)
-            { 
+            {
                 blocks[i].draw(scroll);
             }
 
             int speed = 5;
 
-            if (Engine.GetKeyHeld(Key.Left) && scroll <= -1)
-            {
-                scroll += speed;
-            }
-
-            if (Engine.GetKeyHeld(Key.Right) && scroll >= -7425)
+            //adjust scroll
+            if (Engine.GetKeyHeld(Key.Right) && player.getKPosition().X > 940 && scroll > -7425 && player.getMoveRight())
             {
                 scroll -= speed;
             }
-            
+            if (Engine.GetKeyHeld(Key.Left) && player.getKPosition().X < 255 && scroll < 0 && player.getMoveLeft())
+            {
+                scroll -= speed;
+            }
+            // draw the blocks
+            for (int i = 0; i < blocks.Length; i++)
+            {
+                blocks[i].draw(scroll);
+            }
+            /*
+            if (enemy.isAlive)
+            {
+                enemy.runEnemyCode();
+            }
+            */
             menuButtons();
         }
-        if (c.isAlive)
-        {
-            c.runEnemyCode();
-        }
-        b.Update();
 
         //game over screen
         else if (index == 4)
@@ -126,16 +143,16 @@ class Game
             Engine.DrawTexture(done, Vector2.Zero);
             if (Engine.GetMouseButtonDown(MouseButton.Left))
             {
-                index=0;
+                index = 0;
             }
         }
-
-        if (menuOpen) {
+        if (menuOpen)
+        {
 
             openMenu();
 
         }
-        
+
     }
 
     //back/next buttons for switching screens
@@ -174,9 +191,9 @@ class Game
             nBound = new Bounds2(0, 0, 40, 40);
         }
 
-        Engine.DrawTexture(back, new Vector2(30,20), source: bBound);
-        Engine.DrawTexture(back, new Vector2(1205, 20), source: nBound, mirror:next);
-        
+        Engine.DrawTexture(back, new Vector2(30, 20), source: bBound);
+        Engine.DrawTexture(back, new Vector2(1205, 20), source: nBound, mirror: next);
+
     }
 
     //menu button functions
@@ -208,7 +225,7 @@ class Game
     {
         Engine.DrawTexture(menu, Vector2.Zero);
 
-        Engine.DrawTexture(resume, new Vector2 (0,300));
+        Engine.DrawTexture(resume, new Vector2(0, 300));
         Engine.DrawTexture(infoButton, new Vector2(0, 400));
         Engine.DrawTexture(quit, new Vector2(0, 500));
 
@@ -240,6 +257,7 @@ class Game
             }
 
 
+
         }
     }
 
@@ -255,6 +273,7 @@ class Game
 
             blocks[i] = new Block(Int32.Parse(nums[0]), Int32.Parse(nums[1]), Int32.Parse(nums[2]));
         }
+        player.updateBlocks(blocks);
         sr.Close();
     }
 }

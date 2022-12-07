@@ -7,7 +7,6 @@ class Block
     readonly Font font = Engine.LoadFont("font.ttf", 20);
     int leftbound;
     int upperbound;
-    int rightbound;
     int tileType;
     Vector2 coordinates;
     int blockSize = 75;
@@ -53,33 +52,19 @@ class Block
     {
         return leftbound + blockSize;
     }
+    public int getLowerbound()
+    {
+        return upperbound + blockSize;
+    }
 
     public void draw()
     {
         Color color = Color.Black;
-        if (tileType == 0)
-        {
-            color = Color.Aqua;
-        }
-        if (tileType == 1)
-        {
-            color = Color.Coral;
-        }
-        Engine.DrawRectSolid(new Bounds2(new Vector2(leftbound, upperbound), new Vector2(blockSize, blockSize)), color);
-        Engine.DrawString(coordinates.ToString() + tileType.ToString(), new Vector2(leftbound, upperbound), Color.Black, font);
+        Engine.DrawRectSolid(new Bounds2(new Vector2(leftbound, upperbound), new Vector2(blockSize, blockSize)), Color.Black);
     }
     public void draw(int scroll)
     {
         Color color = Color.Black;
-        if (tileType == 0)
-        {
-            color = Color.Aqua;
-        }
-        if (tileType == 1)
-        {
-            color = Color.Coral;
-        }
-        Engine.DrawRectSolid(new Bounds2(new Vector2(leftbound + scroll, upperbound), new Vector2(blockSize, blockSize)), color);
-        Engine.DrawString(coordinates.ToString() + tileType.ToString(), new Vector2(leftbound + scroll, upperbound), Color.Black, font);
+        Engine.DrawRectSolid(new Bounds2(new Vector2(leftbound + scroll, upperbound), new Vector2(blockSize, blockSize)), Color.Black);
     }
 }
