@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 
 class Player
@@ -20,6 +20,7 @@ class Player
 
     // Keep track of K's state:
     public Vector2 kPos = Resolution / 2;
+    public Vector2 kVel = new Vector2(WalkSpeed, 0);
     bool kFaceLeft = false;
     float kFrameIndex = 0;
 
@@ -53,7 +54,7 @@ class Player
         bool kIdle = true;
         frames = 6.0f;
         bound = 100;
-        
+
         canMoveLeft = true;
         canMoveRight = true;
         bool canMoveDown = true;
@@ -114,7 +115,7 @@ class Player
                 }
             }
 
-            if (bounds.Contains(new Vector2(kPos.X + 65, kPos.Y + 99)) || 
+            if (bounds.Contains(new Vector2(kPos.X + 65, kPos.Y + 99)) ||
                 bounds.Contains(new Vector2(kPos.X + 34, kPos.Y + 99)))
             {
                 canMoveDown = false;
@@ -155,18 +156,20 @@ class Player
         // For moving up
         if (Engine.GetKeyHeld(Key.Up) && canMoveUp)
         {
-            kPos.Y -= WalkSpeed * 10;
+            kVel.Y = 5;
+            kVel.Y += 10;
+            kPos.Y -= kVel.Y;
             kIdle = false;
             yCoord = 200;
             frames = 6.0f;
             bound = 100;
-            inhale = true;
         }
-        // move down
-        if (canMoveDown)
+        // Otherwise, full enable gravity
+        else if (kPos.Y < 380)
         {
-            kPos.Y += WalkSpeed * 2;
+            kPos.Y += kVel.Y * Engine.TimeDelta + 10;
         }
+
         // For inhaling
         if (Engine.GetKeyHeld(Key.Space))
         {
@@ -174,6 +177,7 @@ class Player
             yCoord = 100;
             frames = 6.0f;
             bound = 100;
+            inhale = true;
         }
         if (Engine.GetKeyHeld(Key.P))
         {
@@ -182,7 +186,7 @@ class Player
             yCoord = currP * 100;
             frames = 12.0f;
             bound = 200;
-            inhale = true;
+            // inhale = true;
             if (kFaceLeft)
             {
                 kPos.X -= 100f;
@@ -198,7 +202,7 @@ class Player
         Vector2 kDrawPos = kPos + new Vector2(0, 0);
         TextureMirror kMirror = kFaceLeft ? TextureMirror.Horizontal : TextureMirror.None;
         Engine.DrawTexture(texK, kDrawPos, source: kFrameBounds, mirror: kMirror);
-        if (kFaceLeft&&bound==200)
+        if (kFaceLeft && bound == 200)
         {
             kPos.X += 100f;
         }
