@@ -12,6 +12,9 @@ class Game
     Boolean menuOpen = false; // tells us if menu is open or not
 
     Stack<String> screens = new Stack<String>();
+    Double time = 0;
+
+    Music music = Engine.LoadMusic("Kiki.mp3");
 
     //textures for screens
     Texture start = Engine.LoadTexture("start.png");
@@ -42,31 +45,39 @@ class Game
         Engine.DrawTexture(background, Vector2.Zero);
         reload();
         c = new Enemy(2, b);
+        //plays music
+        if (time % 125.0 == 0)
+        {
+            Engine.PlayMusic(music);
+            time = 0;
+        }
     }
     public void Update()
     {
+        time += 0.016;
+
         //start screen
         if (index == 0)
         {
             Engine.DrawTexture(start, Vector2.Zero);
-            if ((Engine.GetMouseButtonDown(MouseButton.Left))&&(!menuOpen))
+            if ((Engine.GetMouseButtonDown(MouseButton.Left)) && (!menuOpen))
             {
                 index++;
             }
-        
-        //1st instructions screen
-        }else if (index == 1) {
+
+            //1st instructions screen
+        } else if (index == 1) {
             arrowButtons();
             menuButtons();
-        
-        //2nd instructions screen
-        }else if (index == 2) {
+
+            //2nd instructions screen
+        } else if (index == 2) {
             arrowButtons();
             menuButtons();
-        
-        //level 1
-        }else if (index == 3) {
-            
+
+            //level 1
+        } else if (index == 3) {
+
             Engine.DrawTexture(background, Vector2.Zero);
             if (Engine.GetKeyDown(Key.R))
             {
@@ -76,7 +87,7 @@ class Game
             b.Update();
 
             for (int i = 0; i < blocks.Length; i++)
-            { 
+            {
                 blocks[i].draw(scroll);
             }
 
@@ -91,15 +102,17 @@ class Game
             {
                 scroll -= speed;
             }
-            
+
+            if (c.isAlive)
+            {
+                c.runEnemyCode();
+            }
+            b.Update();
+
             menuButtons();
         }
-        if (c.isAlive)
-        {
-            c.runEnemyCode();
-        }
-        b.Update();
-
+        
+    
         //game over screen
         else if (index == 4)
         {
