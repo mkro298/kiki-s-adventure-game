@@ -113,19 +113,19 @@ class Game
             }
             if (Engine.GetKeyHeld(Key.Left) && player.getKPosition().X < 255 && scroll < 0 && player.getMoveLeft())
             {
-                scroll -= speed;
+                scroll += speed;
             }
             // draw the blocks
             for (int i = 0; i < blocks.Length; i++)
             {
                 blocks[i].draw(scroll);
             }
-            /*
-            if (enemy.isAlive)
+            
+            if (player.getKPosition().Y > 1000)
             {
-                enemy.runEnemyCode();
+                index++;
             }
-            */
+
             menuButtons();
         }
 
