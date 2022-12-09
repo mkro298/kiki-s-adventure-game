@@ -16,7 +16,7 @@ class Player
 
     float frames = 6.0f;
     int bound = 100;
-    int currP = 0;
+    public int currP = -1;
 
     // Keep track of K's state:
     public Vector2 kPos = Resolution / 2;
@@ -43,12 +43,12 @@ class Player
     //assumes enemy is hit by player through powers or through inhaling 
     public void enemyHit(Enemy a)
     {
-        currP = a.returnPower();
         points += 50;
     }
 
     public void Update(int scroll)
     {
+        Engine.DrawString("Current Score: " + points.ToString(), new Vector2 (50,650), Color.White, Game.font);
         inhale = false;
         texK = tex;
         bool kIdle = true;
@@ -181,14 +181,15 @@ class Player
             bound = 100;
             inhale = true;
         }
-        if (Engine.GetKeyHeld(Key.P))
+        if (Engine.GetKeyHeld(Key.P)&&currP!=-1)
         {
             texK = powers;
             kIdle = false;
             yCoord = currP * 100;
             frames = 12.0f;
             bound = 200;
-            // inhale = true;
+            inhale = true;
+
             if (kFaceLeft)
             {
                 kPos.X -= 100f;

@@ -37,7 +37,7 @@ class Game
     Texture quit = Engine.LoadTexture("Quit Button.png");
 
     readonly Texture background = Engine.LoadTexture("Kirby red level background.png");
-    readonly Font font = Engine.LoadFont("font.ttf", 20);
+    public static Font font = Engine.LoadFont("font.ttf", 20);
     static int numBlocks = 202;
 
     static Block[] blocks;
@@ -108,7 +108,10 @@ class Game
             {
                 reload();
             }
-            enemy.runEnemyCode();
+            if (enemy.isAlive)
+            {
+                enemy.runEnemyCode();
+            }
             player.Update(scroll);
 
             for (int i = 0; i < blocks.Length; i++)
