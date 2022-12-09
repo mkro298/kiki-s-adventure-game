@@ -12,7 +12,6 @@ class Game
 
     int index = 0; // keeps track of current screen
     Boolean win = false; // tells whether player passed the level
-    Boolean dead = true;
     Boolean menuOpen = false; // tells us if menu is open or not
 
     Stack<String> screens = new Stack<String>();
@@ -36,20 +35,23 @@ class Game
     Texture infoButton = Engine.LoadTexture("Instructions Button.png");
     Texture quit = Engine.LoadTexture("Quit Button.png");
 
+    // door
+    Texture door = Engine.LoadTexture("door.png");
+
     readonly Texture background = Engine.LoadTexture("Kirby red level background.png");
-    public static Font font = Engine.LoadFont("font.ttf", 20);
+    readonly Font font = Engine.LoadFont("font.ttf", 20);
     static int numBlocks = 202;
 
     static Block[] blocks;
     Player player = new Player(blocks);
-    Enemy enemy;
+    //Enemy enemy;
 
 
     public Game()
     {
         Engine.DrawTexture(background, Vector2.Zero);
         reload();
-        enemy = new Enemy(2, player);
+        //enemy = new Enemy(2, player);
         
         //plays music
         if (time % 125.0 == 0)
@@ -66,8 +68,6 @@ class Game
         //start screen
         if (index == 0)
         {
-            dead = true;
-            
             Engine.DrawTexture(start, Vector2.Zero);
             if ((Engine.GetMouseButtonDown(MouseButton.Left)) && (!menuOpen))
             {
@@ -94,24 +94,21 @@ class Game
         else if (index == 3)
         {
 
-            if (dead)
-            {
-                dead = false;
-                scroll = 0;
-                player.kPos.X = 260;
-                player.kPos.Y = Resolution.Y / 2;
-            }
-
-
             Engine.DrawTexture(background, Vector2.Zero);
             if (Engine.GetKeyDown(Key.R))
             {
                 reload();
             }
-            if (enemy.isAlive)
+            if (Engine.GetKeyHeld(Key.D))
             {
-                enemy.runEnemyCode();
+                
+                Engine.DrawTexture(door, new Vector2(8300 + scroll, 575), source: new Bounds2(75, 0, 75, 100));
+            } else
+            {
+                Engine.DrawTexture(door, new Vector2(8300 + scroll, 575), source: new Bounds2(0, 0, 75, 100));
             }
+            
+            //enemy.runEnemyCode();
             player.Update(scroll);
 
             for (int i = 0; i < blocks.Length; i++)
@@ -122,11 +119,11 @@ class Game
             int speed = 5;
 
             //adjust scroll
-            if (Engine.GetKeyHeld(Key.Right) && player.getKPosition().X >= 940 && scroll >= -7425 && player.getMoveRight())
+            if (Engine.GetKeyHeld(Key.Right) && player.getKPosition().X > 940 && scroll > -7425 && player.getMoveRight())
             {
                 scroll -= speed;
             }
-            if (Engine.GetKeyHeld(Key.Left) && player.getKPosition().X <= 255 && scroll <= 0 && player.getMoveLeft())
+            if (Engine.GetKeyHeld(Key.Left) && player.getKPosition().X < 255 && scroll < 0 && player.getMoveLeft())
             {
                 scroll += speed;
             }
@@ -136,33 +133,23 @@ class Game
                 blocks[i].draw(scroll);
             }
             
-
-            menuButtons();
-
-            if (player.getKPosition().Y >= 1000)
+            if (player.getKPosition().Y > 1000)
             {
-                dead = true;
-            }
-
-            if (dead == true)
-            {
-                win = false;
                 index++;
             }
 
+            menuButtons();
         }
 
         //game over screen
         else if (index == 4)
         {
-            
             if (win)
             {
                 index++;
             }
             else
             {
-
                 menuButtons();
                 Engine.DrawTexture(gameover, Vector2.Zero);
                 if ((Engine.GetMouseButtonDown(MouseButton.Left)) && (!menuOpen))
