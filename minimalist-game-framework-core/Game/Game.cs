@@ -12,6 +12,7 @@ class Game
 
     int index = 0; // keeps track of current screen
     Boolean win = false; // tells whether player passed the level
+    Boolean dead = true;
     Boolean menuOpen = false; // tells us if menu is open or not
 
     Stack<String> screens = new Stack<String>();
@@ -39,7 +40,7 @@ class Game
     Texture door = Engine.LoadTexture("door.png");
 
     readonly Texture background = Engine.LoadTexture("Kirby red level background.png");
-    readonly Font font = Engine.LoadFont("font.ttf", 20);
+    public static Font font = Engine.LoadFont("font.ttf", 20);
     static int numBlocks = 202;
 
     static Block[] blocks;
@@ -52,6 +53,8 @@ class Game
         Engine.DrawTexture(background, Vector2.Zero);
         reload();
         //enemy = new Enemy(2, player);
+
+        dead = true;
         
         //plays music
         if (time % 125.0 == 0)
@@ -93,6 +96,14 @@ class Game
         }
         else if (index == 3)
         {
+            
+            if (dead)
+            {
+                dead = false;
+                scroll = 0;
+                player.kPos.X = 260;
+                player.kPos.Y = Resolution.Y / 2;
+            }
 
             Engine.DrawTexture(background, Vector2.Zero);
             if (Engine.GetKeyDown(Key.R))
@@ -132,13 +143,19 @@ class Game
             {
                 blocks[i].draw(scroll);
             }
-            
-            if (player.getKPosition().Y > 1000)
+           
+            menuButtons();
+
+            if (player.getKPosition().Y >= 1000)
             {
-                index++;
+                dead = true;
             }
 
-            menuButtons();
+            if (dead == true)
+            {
+                win = false;
+                index++;
+            }
         }
 
         //game over screen
