@@ -1,7 +1,8 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 
-class Player
+class Player 
 {
     public static readonly string Title = "Minimalist Game Framework";
     public static readonly Vector2 Resolution = new Vector2(1275, 750);
@@ -16,7 +17,7 @@ class Player
 
     float frames = 6.0f;
     int bound = 100;
-    int currP = 0;
+    public int currP = -1;
 
     // Keep track of K's state:
     public Vector2 kPos = Resolution / 2;
@@ -24,7 +25,7 @@ class Player
     bool kFaceLeft = false;
     float kFrameIndex = 0;
 
-    int points = 0;
+    public int points = 0;
     int yCoord = 0;
     public Boolean inhale = false;
     bool canMoveLeft = true;
@@ -43,10 +44,22 @@ class Player
     //assumes enemy is hit by player through powers or through inhaling 
     public void enemyHit(Enemy a)
     {
-        currP = a.returnPower();
         points += 50;
     }
 
+    public String highScore()
+    {
+        Engine.reload();
+        StreamReader sr = new StreamReader("assets/highScore.txt");
+        int highScore = int.Parse(sr.ReadLine());
+        sr.Close();
+        if (points > highScore)
+        {
+            File.WriteAllTextAsync("assets/highScore.txt", points.ToString());
+            return points.ToString();
+        }
+        return highScore.ToString();
+    }
     public void Update(int scroll)
     {
         inhale = false;
@@ -181,14 +194,15 @@ class Player
             bound = 100;
             inhale = true;
         }
-        if (Engine.GetKeyHeld(Key.P))
+        if (Engine.GetKeyHeld(Key.P)&&currP!=-1)
         {
             texK = powers;
             kIdle = false;
             yCoord = currP * 100;
             frames = 12.0f;
             bound = 200;
-            // inhale = true;
+            inhale = true;
+
             if (kFaceLeft)
             {
                 kPos.X -= 100f;

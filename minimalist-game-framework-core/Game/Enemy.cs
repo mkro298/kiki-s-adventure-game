@@ -21,6 +21,7 @@ class Enemy
 
     Boolean enemyHit = false;
     public Boolean isAlive = true;
+    Boolean hit = false;
     int framesDrawn = 0;
     int yCoord;
     
@@ -48,9 +49,10 @@ class Enemy
 
     public void hitPlayer()
     {
-        if (pl.inhale == true && Math.Abs(enemyPos.X-pl.kPos.X)<200 && Math.Abs(enemyPos.Y-pl.kPos.Y)<200)
+        if (!hit&&pl.inhale == true && Math.Abs(enemyPos.X-pl.kPos.X)<200 && Math.Abs(enemyPos.Y-pl.kPos.Y)<200)
         {
            pl.enemyHit(this);
+            hit = true;
             spriteSheet = enemyDeath;
             frames = 9;
             yCoord = 0;
@@ -82,6 +84,7 @@ class Enemy
         if (eFrameIndex >= 8 && frames == 9)
         {
             isAlive = false;
+            pl.currP = power;
         }
         Bounds2 eFrameBounds = new Bounds2(((int)eFrameIndex) * 100,yCoord*100, 100, 100);
 
@@ -89,9 +92,5 @@ class Enemy
         Vector2 eDrawPos = enemyPos + new Vector2(-8 + scroll, -8);
         TextureMirror eMirror = movingLeft ? TextureMirror.Horizontal : TextureMirror.None;
         Engine.DrawTexture(spriteSheet, eDrawPos, source: eFrameBounds, mirror: eMirror);
-    }
-    public int returnPower()
-    {
-        return power;
     }
 }

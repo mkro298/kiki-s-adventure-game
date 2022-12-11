@@ -2,7 +2,7 @@
 using System.IO;
 using System.Collections.Generic;
 
-class Block
+class Block 
 {
     readonly Font font = Engine.LoadFont("font.ttf", 20);
     int leftbound;
