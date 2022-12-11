@@ -50,16 +50,19 @@ class Game
 
     static Block[] blocks;
     Player player = new Player(blocks);
-    Enemy enemy;
+    EnemyManager enemyManager;
 
      
     public Game()
     {
         Engine.DrawTexture(background, Vector2.Zero);
         reload();
-        enemy = new Enemy(2, player);
+
+        enemyManager = new EnemyManager(player);
+        enemyManager.initializeEnemies();
 
         dead = true;
+
         
         //plays music
         if (time % 125.0 == 0)
@@ -121,6 +124,9 @@ class Game
             {
                 reload();
             }
+
+            enemyManager.Update(scroll);
+
             if (Engine.GetKeyHeld(Key.D))
             {
 
@@ -133,7 +139,6 @@ class Game
                 Engine.DrawTexture(door, new Vector2(8300 + scroll, 575), source: new Bounds2(0, 0, 75, 100));
             }
             
-            //enemy.runEnemyCode();
             player.Update(scroll);
 
             for (int i = 0; i < blocks.Length; i++)

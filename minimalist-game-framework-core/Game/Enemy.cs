@@ -3,12 +3,9 @@ using System.Collections.Generic;
 
 class Enemy
 {
-    public static readonly string Title = "Minimalist Game Framework";
-    public static readonly Vector2 Resolution = new Vector2(640, 480);
-
     //animation speeds
     static readonly float Framerate = 10;
-    static readonly float WalkSpeed = 50;
+    static readonly float WalkSpeed = 1;
 
     //load basic sprite sheet
     readonly Texture enemy = Engine.LoadTexture("ENEMY.png");
@@ -18,7 +15,7 @@ class Enemy
     int frames = 12;
 
     //enemy state
-    Vector2 enemyPos = new Vector2(300f, 360.0f);
+    Vector2 enemyPos;
     Boolean movingLeft = false;
     float eFrameIndex = 0;
 
@@ -33,14 +30,21 @@ class Enemy
 
     int time = 0;
 
+    int minX;
+    int maxX;
+    int yPos;
 
-    public Enemy(int p, Player a)
+
+    public Enemy(int p, Player a, int minX, int maxX, int yPos)
     {
         power = p;
         pl = a;
-        yCoord = power;
         spriteSheet = enemy;
         yCoord = p;
+        this.minX = minX;
+        this.maxX = maxX;
+        this.yPos = yPos;
+        enemyPos = new Vector2(minX, yPos);
     }
 
     public void hitPlayer()
@@ -55,23 +59,23 @@ class Enemy
         }
     }
 
-    public void runEnemyCode()
+    public void runEnemyCode(int scroll)
     {
-
+        //enemyPos.X += scroll;
         hitPlayer();
         if (movingLeft)
         {
-            enemyPos.X--;
+            enemyPos.X -= WalkSpeed;
         }
         else
         {
-            enemyPos.X++;
+            enemyPos.X += WalkSpeed;
         }
-        if (enemyPos.X == (200))
+        if (enemyPos.X == minX)
         {
             movingLeft = false;
         }
-        if (enemyPos.X == 400)
+        if (enemyPos.X == maxX)
         {
             movingLeft = true;
         }
@@ -85,7 +89,7 @@ class Enemy
         Bounds2 eFrameBounds = new Bounds2(((int)eFrameIndex) * 100,yCoord*100, 100, 100);
 
         //draw sprite
-        Vector2 eDrawPos = enemyPos + new Vector2(-8, -8);
+        Vector2 eDrawPos = enemyPos + new Vector2(-8 + scroll, -8);
         TextureMirror eMirror = movingLeft ? TextureMirror.Horizontal : TextureMirror.None;
         Engine.DrawTexture(spriteSheet, eDrawPos, source: eFrameBounds, mirror: eMirror);
     }
