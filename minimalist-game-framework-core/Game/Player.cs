@@ -24,7 +24,7 @@ class Player
     bool kFaceLeft = false;
     float kFrameIndex = 0;
 
-    int points = 0;
+    public int points = 0;
     int yCoord = 0;
     public Boolean inhale = false;
     bool canMoveLeft = true;
@@ -48,7 +48,6 @@ class Player
 
     public void Update(int scroll)
     {
-        Engine.DrawString("Current Score: " + points.ToString(), new Vector2 (50,650), Color.White, Game.font);
         inhale = false;
         texK = tex;
         bool kIdle = true;
