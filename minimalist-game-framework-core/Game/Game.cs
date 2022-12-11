@@ -41,14 +41,15 @@ class Game
 
     static Block[] blocks;
     Player player = new Player(blocks);
-    Enemy enemy;
+    EnemyManager enemyManager;
 
 
     public Game()
     {
         Engine.DrawTexture(background, Vector2.Zero);
         reload();
-        enemy = new Enemy(2, player);
+        enemyManager = new EnemyManager(player);
+        enemyManager.initializeEnemies();
         
         //plays music
         if (time % 125.0 == 0)
@@ -96,7 +97,7 @@ class Game
             {
                 reload();
             }
-            enemy.runEnemyCode();
+            enemyManager.Update();
             player.Update(scroll);
 
             for (int i = 0; i < blocks.Length; i++)
