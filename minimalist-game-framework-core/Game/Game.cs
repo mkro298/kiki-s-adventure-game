@@ -44,7 +44,7 @@ class Game
     Player player = new Player(blocks);
     Enemy enemy;
 
-
+     
     public Game()
     {
         Engine.DrawTexture(background, Vector2.Zero);
@@ -98,8 +98,10 @@ class Game
             {
                 dead = false;
                 scroll = 0;
+                player = new Player(blocks);
                 player.kPos.X = 260;
                 player.kPos.Y = Resolution.Y / 2;
+                enemy = new Enemy(2, player);
             }
 
 
@@ -165,6 +167,7 @@ class Game
 
                 menuButtons();
                 Engine.DrawTexture(gameover, Vector2.Zero);
+                Engine.DrawString("High Score: " + player.highScore(), new Vector2(400, 50), Color.White, font);
                 if ((Engine.GetMouseButtonDown(MouseButton.Left)) && (!menuOpen))
                 {
                     index = 0;
