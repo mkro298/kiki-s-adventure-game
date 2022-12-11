@@ -38,7 +38,6 @@ class Enemy
     {
         power = p;
         pl = a;
-        yCoord = power;
         spriteSheet = enemy;
         yCoord = p;
         this.minX = minX;
@@ -58,9 +57,9 @@ class Enemy
         }
     }
 
-    public void runEnemyCode()
+    public void runEnemyCode(int scroll)
     {
-
+        //enemyPos.X += scroll;
         hitPlayer();
         if (movingLeft)
         {
@@ -87,7 +86,7 @@ class Enemy
         Bounds2 eFrameBounds = new Bounds2(((int)eFrameIndex) * 100,yCoord*100, 100, 100);
 
         //draw sprite
-        Vector2 eDrawPos = enemyPos + new Vector2(-8, -8);
+        Vector2 eDrawPos = enemyPos + new Vector2(-8 + scroll, -8);
         TextureMirror eMirror = movingLeft ? TextureMirror.Horizontal : TextureMirror.None;
         Engine.DrawTexture(spriteSheet, eDrawPos, source: eFrameBounds, mirror: eMirror);
     }

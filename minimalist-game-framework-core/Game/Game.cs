@@ -97,7 +97,7 @@ class Game
             {
                 reload();
             }
-            enemyManager.Update();
+            enemyManager.Update(scroll);
             player.Update(scroll);
 
             for (int i = 0; i < blocks.Length; i++)

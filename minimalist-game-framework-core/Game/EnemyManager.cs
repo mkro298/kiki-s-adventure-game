@@ -9,24 +9,24 @@ class EnemyManager
 
     public EnemyManager(Player a)
     {
-        Player pl = a;
+        pl = a;
     }
 
     public void initializeEnemies()
     {
-        enemies.Add(new Enemy(1, pl, 200, 400, 200));
-        enemies.Add(new Enemy(2, pl, 500, 700, 200));
-        enemies.Add(new Enemy(3, pl, 800, 1000, 200));
-        enemies.Add(new Enemy(4, pl, 1100, 1300, 200));
+        enemies.Add(new Enemy(1, pl, 900, 990, 358));
+        enemies.Add(new Enemy(2, pl, 1780, 1900, 582));
+        enemies.Add(new Enemy(3, pl, 3800, 4100, 508));
+        enemies.Add(new Enemy(4, pl, 4800, 4900, 582));
     }
 
-    public void Update()
+    public void Update(int scroll)
     {
         for(int i = 0; i < enemies.Count; i++)
         {
             if (enemies[i].isAlive)
             {
-                enemies[i].runEnemyCode();
+                enemies[i].runEnemyCode(scroll);
             }
             else
             {
