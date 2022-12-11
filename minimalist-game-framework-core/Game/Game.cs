@@ -50,14 +50,14 @@ class Game
 
     static Block[] blocks;
     Player player = new Player(blocks);
-    //Enemy enemy;
+    Enemy enemy;
 
      
     public Game()
     {
         Engine.DrawTexture(background, Vector2.Zero);
         reload();
-        //enemy = new Enemy(2, player);
+        enemy = new Enemy(2, player);
 
         dead = true;
         
