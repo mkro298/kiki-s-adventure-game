@@ -1,7 +1,8 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 
-class Player
+class Player 
 {
     public static readonly string Title = "Minimalist Game Framework";
     public static readonly Vector2 Resolution = new Vector2(1275, 750);
@@ -46,6 +47,19 @@ class Player
         points += 50;
     }
 
+    public String highScore()
+    {
+        Engine.reload();
+        StreamReader sr = new StreamReader("assets/highScore.txt");
+        int highScore = int.Parse(sr.ReadLine());
+        sr.Close();
+        if (points > highScore)
+        {
+            File.WriteAllTextAsync("assets/highScore.txt", points.ToString());
+            return points.ToString();
+        }
+        return highScore.ToString();
+    }
     public void Update(int scroll)
     {
         inhale = false;
