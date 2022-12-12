@@ -59,7 +59,6 @@ class Game
         reload();
 
         enemyManager = new EnemyManager(player);
-        enemyManager.initializeEnemies();
 
         dead = true;
 
@@ -118,14 +117,13 @@ class Game
                 player = new Player(blocks);
                 player.kPos.X = 260;
                 player.kPos.Y = Resolution.Y / 2;
-                enemy = new Enemy(2, player);
+                enemyManager = new EnemyManager(player);
+                enemyManager.initializeEnemies();
             }
             if (Engine.GetKeyDown(Key.R))
             {
                 reload();
             }
-
-            enemyManager.Update(scroll);
 
             if (Engine.GetKeyHeld(Key.D))
             {
@@ -140,6 +138,7 @@ class Game
             }
             
             player.Update(scroll);
+            enemyManager.Update(scroll);
 
             for (int i = 0; i < blocks.Length; i++)
             {
