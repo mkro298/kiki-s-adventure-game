@@ -126,7 +126,7 @@ class Game
                 reload();
             }
 
-            if (Engine.GetKeyHeld(Key.D))
+            if (player.points>=100)
             {
 
                 Engine.DrawTexture(background2, Vector2.Zero);
