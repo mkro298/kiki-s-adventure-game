@@ -37,7 +37,7 @@ class Game
 
     //textures for menu options
     Texture resume = Engine.LoadTexture("Resume Button.png");
-    Texture infoButton = Engine.LoadTexture("Instructions Button.png");
+    Texture infoButton = Engine.LoadTexture("Instructions Button.png"); 
     Texture quit = Engine.LoadTexture("Quit Button.png");
 
     // door
@@ -59,6 +59,7 @@ class Game
         reload();
 
         enemyManager = new EnemyManager(player);
+        enemyManager.initializeEnemies();
 
         dead = true;
 
@@ -109,7 +110,6 @@ class Game
         }
         else if (index == 3)
         {
-            
             if (dead)
             {
                 dead = false;
@@ -120,6 +120,7 @@ class Game
                 enemyManager = new EnemyManager(player);
                 enemyManager.initializeEnemies();
             }
+
             if (Engine.GetKeyDown(Key.R))
             {
                 reload();
@@ -136,7 +137,6 @@ class Game
                 Engine.DrawTexture(background, Vector2.Zero);
                 Engine.DrawTexture(door, new Vector2(8300 + scroll, 575), source: new Bounds2(0, 0, 75, 100));
             }
-            
             player.Update(scroll);
             enemyManager.Update(scroll);
 

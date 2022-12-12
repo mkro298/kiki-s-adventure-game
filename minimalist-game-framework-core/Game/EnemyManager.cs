@@ -10,10 +10,11 @@ class EnemyManager
     public EnemyManager(Player a)
     {
         pl = a;
-    }
+    } 
 
     public void initializeEnemies()
     {
+       // enemies.Add(new Enemy(0,pl, 400, 450, 480));
         enemies.Add(new Enemy(1, pl, 900, 990, 358));
         enemies.Add(new Enemy(2, pl, 1780, 1900, 582));
         enemies.Add(new Enemy(3, pl, 3800, 4100, 508));
@@ -30,8 +31,8 @@ class EnemyManager
             }
             else
             {
-                enemies.RemoveAt(i);
-                i--;
+               enemies.RemoveAt(i);
+               i--;
             }
             
         }

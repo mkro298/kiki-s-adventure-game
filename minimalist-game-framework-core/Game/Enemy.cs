@@ -21,7 +21,7 @@ class Enemy
 
     Boolean enemyHit = false;
     public Boolean isAlive = true;
-    Boolean hit = false;
+    public Boolean hit = false;
     int framesDrawn = 0;
     int yCoord;
     
@@ -47,22 +47,23 @@ class Enemy
         enemyPos = new Vector2(minX, yPos);
     }
 
-    public void hitPlayer()
-    {
-        if (!hit&&pl.inhale == true && Math.Abs(enemyPos.X-pl.kPos.X)<200 && Math.Abs(enemyPos.Y-pl.kPos.Y)<200)
+    public void hitPlayer(int scroll)
+    { 
+        if (!hit&&pl.inhale == true && Math.Abs((enemyPos.X-8+scroll)-pl.kPos.X)<200 && Math.Abs(enemyPos.Y-pl.kPos.Y)<200)
         {
-           pl.enemyHit(this);
+            pl.enemyHit(this);
             hit = true;
             spriteSheet = enemyDeath;
             frames = 9;
             yCoord = 0;
         }
+       
     }
 
-    public void runEnemyCode(int scroll)
+    public void runEnemyCode(int scroll) 
     {
         //enemyPos.X += scroll;
-        hitPlayer();
+        hitPlayer(scroll);
         if (movingLeft)
         {
             enemyPos.X -= WalkSpeed;
