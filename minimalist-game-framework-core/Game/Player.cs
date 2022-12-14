@@ -30,6 +30,7 @@ class Player
     public Boolean inhale = false;
     bool canMoveLeft = true;
     bool canMoveRight = true;
+    int jumps = 0;
 
     // blocks array
     Block[] blocks;
@@ -133,6 +134,7 @@ class Player
                 bounds.Contains(new Vector2(kPos.X + 34, kPos.Y + 99)))
             {
                 canMoveDown = false;
+                jumps = 0;
                 kVel.Y = 0;
                 if (bounds.Contains(new Vector2(kPos.X + 65, kPos.Y + 98)) ||
                     bounds.Contains(new Vector2(kPos.X + 34, kPos.Y + 98)))
@@ -169,13 +171,14 @@ class Player
             bound = 100;
         }
         // For moving up
-        if (Engine.GetKeyUp(Key.Up) && canMoveUp)
+        if (Engine.GetKeyDown(Key.Up) && canMoveUp && jumps < 2)
         {
-            kVel.Y+= WalkSpeed * WalkSpeed * WalkSpeed / 6;
+            kVel.Y += WalkSpeed * WalkSpeed * WalkSpeed / 6;
             kIdle = false;
             yCoord = 200;
             frames = 6.0f;
             bound = 100;
+            jumps++;
         }
         
         // Otherwise, full enable gravity
@@ -184,6 +187,12 @@ class Player
             kVel.Y--;
         }
         kPos.Y -= kVel.Y;
+
+        if (kPos.Y < -50)
+        {
+            kVel.Y = 0;
+            kPos.Y = -49;
+        }
 
         // For inhaling
         if (Engine.GetKeyHeld(Key.Space))
