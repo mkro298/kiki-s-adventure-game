@@ -49,11 +49,11 @@ class Enemy
 
     public void hitPlayer(int scroll)
     { 
-        if (!hit&&pl.inhale == true && Math.Abs((enemyPos.X-8+scroll)-pl.kPos.X)<200 && Math.Abs(enemyPos.Y-pl.kPos.Y)<200)
+        if (!hit&&(pl.inhale == true||pl.usingPower==true) && Math.Abs((enemyPos.X-8+scroll)-pl.kPos.X)<200 && Math.Abs(enemyPos.Y-pl.kPos.Y)<200)
         {
             pl.enemyHit(this);
             hit = true;
-            spriteSheet = enemyDeath;
+            spriteSheet = enemyDeath; 
             frames = 9;
             yCoord = 0;
         }

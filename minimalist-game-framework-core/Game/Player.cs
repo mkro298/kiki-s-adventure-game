@@ -18,6 +18,7 @@ class Player
     float frames = 6.0f;
     int bound = 100;
     public int currP = -1;
+    int prevP = -1;
 
     // Keep track of K's state:
     public Vector2 kPos = Resolution / 2;
@@ -26,8 +27,10 @@ class Player
     float kFrameIndex = 0;
 
     public int points = 0;
+    public int health = 0;
     int yCoord = 0;
     public Boolean inhale = false;
+    public Boolean usingPower = false;
     bool canMoveLeft = true;
     bool canMoveRight = true;
 
@@ -44,7 +47,15 @@ class Player
     //assumes enemy is hit by player through powers or through inhaling 
     public void enemyHit(Enemy a)
     {
-        points += 50;
+        if (usingPower)
+        {
+            points += 50;
+        }
+    }
+
+    public void enemyCollision()
+    {
+        health += 20;
     }
 
     public String highScore()
@@ -194,15 +205,14 @@ class Player
             bound = 100;
             inhale = true;
         }
-        if (Engine.GetKeyHeld(Key.P)&&currP!=-1)
+        if (usingPower||(Engine.GetKeyDown(Key.P)&&currP!=-1))
         {
             texK = powers;
             kIdle = false;
             yCoord = currP * 100;
             frames = 12.0f;
             bound = 200;
-            inhale = true;
-
+            usingPower = true;
             if (kFaceLeft)
             {
                 kPos.X -= 100f;
@@ -212,8 +222,12 @@ class Player
 
         // Advance through sprite's 6-frame animation and select the current frame
         kFrameIndex = (kFrameIndex + Engine.TimeDelta * Framerate) % frames;
+        if (kFrameIndex > 11 && usingPower)
+        {
+            usingPower = false; 
+            currP = -1;
+        }
         Bounds2 kFrameBounds = new Bounds2(((int)kFrameIndex) * bound, kIdle ? 0 : yCoord, bound, 100);
-
         // Draw sprite
         Vector2 kDrawPos = kPos + new Vector2(0, 0);
         TextureMirror kMirror = kFaceLeft ? TextureMirror.Horizontal : TextureMirror.None;

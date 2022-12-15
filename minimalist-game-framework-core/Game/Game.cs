@@ -30,6 +30,8 @@ class Game
     Texture instruction2 = Engine.LoadTexture("instruction 2.png");
     Texture credits = Engine.LoadTexture("credits.png");
 
+    Texture healthSheet = Engine.LoadTexture("Health.png");
+
     //textures for basic buttons
     Texture back = Engine.LoadTexture("back_next.png");
     TextureMirror next = TextureMirror.Horizontal;
@@ -80,7 +82,7 @@ class Game
         if (index == 0)
         {
             Engine.DrawTexture(start, Vector2.Zero);
-            if ((Engine.GetMouseButtonDown(MouseButton.Left)) && (!menuOpen))
+            if (((Engine.GetMouseButtonDown(MouseButton.Left))||Engine.GetMouseButtonDown(MouseButton.Right)) && (!menuOpen))
             {
                 index++;
             }
@@ -131,7 +133,7 @@ class Game
 
                 Engine.DrawTexture(background2, Vector2.Zero);
                 Engine.DrawTexture(door, new Vector2(8300 + scroll, 575), source: new Bounds2(75, 0, 75, 100));
-                doorOpen = true;
+                doorOpen = true; 
             } else
             {
                 Engine.DrawTexture(background, Vector2.Zero);
@@ -162,10 +164,11 @@ class Game
                 blocks[i].draw(scroll);
             }
 
-            Engine.DrawString("Current Score: " + player.points.ToString(),
-                new Vector2(50, 650), Color.White, Game.font);
-
             menuButtons();
+            Engine.DrawString("Current Score: " + player.points.ToString(),
+                new Vector2(1000, 50), Color.White, Game.font);
+            Bounds2 hFrameBounds = new Bounds2(((int)(player.health / 100)) * 110, 0, 110, 20);
+            Engine.DrawTexture(healthSheet, new Vector2(1000, 80), source: hFrameBounds, size: new Vector2(220, 40));
 
             if (player.getKPosition().Y >= 1000)
             {
@@ -202,7 +205,7 @@ class Game
             {
                 menuButtons();
                 Engine.DrawTexture(gameover, Vector2.Zero);
-                Engine.DrawString("High Score: " + player.highScore(), new Vector2(400, 50), Color.White, font);
+                Engine.DrawString("High Score: " + player.highScore(), new Vector2(550, 100), Color.White, font);
                 if ((Engine.GetMouseButtonDown(MouseButton.Left)) && (!menuOpen))
                 {
                     index = 6;
@@ -216,6 +219,7 @@ class Game
         {
             menuButtons();
             Engine.DrawTexture(done, Vector2.Zero);
+            Engine.DrawString("High Score: " + player.highScore(), new Vector2(550, 300), Color.White, font);
             if (Engine.GetMouseButtonDown(MouseButton.Left))
             {
                 index++;
@@ -254,7 +258,7 @@ class Game
             (mouse.Y >= 20) && (mouse.Y <= 60))
         {
             bBound = new Bounds2(40, 0, 40, 40);
-            if (Engine.GetMouseButtonDown(MouseButton.Left))
+            if (Engine.GetMouseButtonDown(MouseButton.Left)||Engine.GetMouseButtonDown(MouseButton.Right))
             {
                 index--;
             }
@@ -268,7 +272,7 @@ class Game
             (mouse.Y >= 20) && (mouse.Y <= 60))
         {
             nBound = new Bounds2(40, 0, 40, 40);
-            if (Engine.GetMouseButtonDown(MouseButton.Left))
+            if (Engine.GetMouseButtonDown(MouseButton.Left)||Engine.GetMouseButtonDown(MouseButton.Right))
             {
                 index++;
             }
@@ -293,7 +297,7 @@ class Game
             (mouse.Y >= 20) && (mouse.Y <= 60))
         {
             mBound = new Bounds2(40, 0, 40, 40);
-            if (Engine.GetMouseButtonDown(MouseButton.Left))
+            if (Engine.GetMouseButtonDown(MouseButton.Left)||Engine.GetMouseButtonDown(MouseButton.Right))
             {
                 menuOpen = true;
             }
@@ -316,7 +320,7 @@ class Game
         Engine.DrawTexture(infoButton, new Vector2(0, 400));
         Engine.DrawTexture(quit, new Vector2(0, 500));
 
-        if (Engine.GetMouseButtonDown(MouseButton.Left))
+        if (Engine.GetMouseButtonDown(MouseButton.Left)||Engine.GetMouseButtonDown(MouseButton.Right))
         {
             Vector2 mouse = Engine.MousePosition;
 
