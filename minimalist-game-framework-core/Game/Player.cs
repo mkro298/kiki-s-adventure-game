@@ -32,6 +32,9 @@ class Player
     bool canMoveRight = true;
     int jumps = 0;
 
+    public bool bounceBack = false;
+    public bool bounceForward = false;
+
     // blocks array
     Block[] blocks;
 

@@ -24,7 +24,7 @@ class Enemy
     public Boolean hit = false;
     int framesDrawn = 0;
     int yCoord;
-    
+
     int power = 0;
     Player pl;
 
@@ -49,15 +49,34 @@ class Enemy
 
     public void hitPlayer(int scroll)
     { 
-        if (!hit&&pl.inhale == true && Math.Abs((enemyPos.X-8+scroll)-pl.kPos.X)<50 && Math.Abs(enemyPos.Y-pl.kPos.Y)<20)
+        if (!hit&&pl.inhale == true && Math.Abs((enemyPos.X-8+scroll)-pl.kPos.X)<80 && Math.Abs(enemyPos.Y-pl.kPos.Y)<40)
         {
             pl.enemyHit(this);
             hit = true;
             spriteSheet = enemyDeath;
             frames = 9;
             yCoord = 0;
+            
         }
-       
+
+        if (Math.Abs((enemyPos.X - 8 + scroll) - pl.kPos.X) < 70 && Math.Abs(enemyPos.Y - pl.kPos.Y) < 20)
+        {
+            if(enemyPos.X >= pl.kPos.X)
+            {
+                pl.bounceBack = true;
+            }
+            else
+            {
+                pl.bounceForward = true;
+            }
+        }
+        else
+        {
+            pl.bounceBack = false;
+            pl.bounceBack = false;
+        }
+
+
     }
 
     public void runEnemyCode(int scroll) 
