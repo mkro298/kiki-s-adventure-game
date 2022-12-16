@@ -46,7 +46,7 @@ class Game
     readonly Texture background = Engine.LoadTexture("Kirby red level background - Grayscale.png");
     readonly Texture background2 = Engine.LoadTexture("Kirby red level background.png");
     public static Font font = Engine.LoadFont("font.ttf", 20);
-    static int numBlocks = 202;
+    static int numBlocks = 123;
 
     static Block[] blocks;
     Player player = new Player(blocks);
@@ -351,7 +351,7 @@ class Game
     private void reload()
     {
         Engine.reload();
-        StreamReader sr = new StreamReader("assets/env coords.txt");
+        StreamReader sr = new StreamReader("assets/trial env coords.txt");
         blocks = new Block[numBlocks];
         for (int i = 0; i < blocks.Length; i++)
         {

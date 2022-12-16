@@ -66,5 +66,6 @@ class Block
     {
         Color color = Color.Black;
         Engine.DrawRectSolid(new Bounds2(new Vector2(leftbound + scroll, upperbound), new Vector2(blockSize, blockSize)), Color.Black);
+        Engine.DrawString(coordinates.ToString(), new Vector2(leftbound + scroll, upperbound), Color.White, font);
     }
 }

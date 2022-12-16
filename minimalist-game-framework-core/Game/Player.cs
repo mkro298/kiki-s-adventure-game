@@ -173,6 +173,15 @@ class Player
         // For moving up
         if (Engine.GetKeyDown(Key.Up) && canMoveUp && jumps < 2)
         {
+            if (jumps == 0)
+            {
+                kVel.Y = WalkSpeed * WalkSpeed / 25;
+            }
+            else if (jumps == 1)
+            {
+                kVel.Y = WalkSpeed * WalkSpeed / 30;
+            }
+
             kVel.Y += WalkSpeed * WalkSpeed * WalkSpeed / 6;
             kIdle = false;
             yCoord = 200;
