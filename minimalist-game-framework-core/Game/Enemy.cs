@@ -53,7 +53,7 @@ class Enemy
         {
             pl.enemyHit(this);
             hit = true;
-            spriteSheet = enemyDeath;
+            spriteSheet = enemyDeath; 
             frames = 9;
             yCoord = 0;
             
