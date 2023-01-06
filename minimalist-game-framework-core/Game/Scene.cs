@@ -5,12 +5,11 @@ using System.Collections.Generic;
 class Scene 
 {
     static Vector2 Resolution = Game.Resolution;
-    static int scroll = 0;
 
     static Boolean win = false; // tells whether player passed the level
     static Boolean dead = true;
     static Boolean menuOpen = false; // tells us if menu is open or not
-    static Boolean doorOpen = false; //tells whether door is open
+    //static Boolean doorOpen = false; //tells whether door is open
 
     //textures for screens
     static Texture start = Engine.LoadTexture("start.png");
@@ -34,16 +33,17 @@ class Scene
     static Texture quit = Engine.LoadTexture("Quit Button.png");
 
     // door
-    static Texture door = Engine.LoadTexture("door.png");
+    public static Texture door = Engine.LoadTexture("door.png");
 
-    static readonly Texture background = Engine.LoadTexture("Kirby red level background - Grayscale.png");
+    static readonly Texture background1 = Engine.LoadTexture("Kirby red level background - Grayscale.png");
     static readonly Texture background2 = Engine.LoadTexture("Kirby red level background.png");
     static Font font = Engine.LoadFont("font.ttf", 20);
     static int numBlocksLevel1 = 202;
 
-    static Block[] blocks;
-    static Player player = new Player(blocks);
+    public static Block[] blocks;
+    public static Player player = new Player(blocks);
     static EnemyManager enemyManager;
+    static Level level1 = new Level(background2, background1, numBlocksLevel1, "assets/env coords.txt");
 
     static int screen = 0;
 
@@ -68,7 +68,7 @@ class Scene
                 screen++;
             }
 
-            doorOpen = false;
+            level1.DoorOpen = false;
             player.points = 0;
         }
 
@@ -95,7 +95,7 @@ class Scene
             if (dead)
             {
                 dead = false;
-                scroll = 0;
+                level1.scroll = 0;
                 player = new Player(blocks);
                 player.kPos.X = 260;
                 player.kPos.Y = Resolution.Y / 2;
@@ -107,47 +107,19 @@ class Scene
             {
                 reload();
             }
-
-            if (player.points >= 100)
+            
+            if (player.points > 100)
             {
-
-                Engine.DrawTexture(background2, Vector2.Zero);
-                Engine.DrawTexture(door, new Vector2(8300 + scroll, 575), source: new Bounds2(75, 0, 75, 100));
-                doorOpen = true;
-            }
-            else
-            {
-                Engine.DrawTexture(background, Vector2.Zero);
-                Engine.DrawTexture(door, new Vector2(8300 + scroll, 575), source: new Bounds2(0, 0, 75, 100));
-            }
-            player.Update(scroll);
-            enemyManager.Update(scroll);
-
-            for (int i = 0; i < blocks.Length; i++)
-            {
-                blocks[i].draw(scroll);
+                level1.color = 1;
             }
 
-            int speed = 5;
-
-            //adjust scroll
-            if (Engine.GetKeyHeld(Key.Right) && player.getKPosition().X >= 940 && scroll >= -7425 && player.getMoveRight())
-            {
-                scroll -= speed;
-            }
-            if (Engine.GetKeyHeld(Key.Left) && player.getKPosition().X <= 255 && scroll <= 0 && player.getMoveLeft())
-            {
-                scroll += speed;
-            }
-            // draw the blocks
-            for (int i = 0; i < blocks.Length; i++)
-            {
-                blocks[i].draw(scroll);
-            }
+            level1.Update();
+            player.Update(level1.scroll);
+            enemyManager.Update(level1.scroll);
 
             menuButtons();
             Engine.DrawString("Current Score: " + player.points.ToString(),
-                new Vector2(1000, 50), Color.White, font);
+                                new Vector2(1000, 50), Color.White, font);
             Bounds2 hFrameBounds = new Bounds2(((int)(player.health / 100)) * 110, 0, 110, 20);
             Engine.DrawTexture(healthSheet, new Vector2(1000, 80), source: hFrameBounds, size: new Vector2(220, 40));
 
@@ -162,11 +134,11 @@ class Scene
                 screen++;
             }
 
-            if ((player.kPos.X >= 8300 + scroll) &&
-                (player.kPos.X <= 8375 + scroll) &&
+            if ((player.kPos.X >= 8300 + level1.scroll) &&
+                (player.kPos.X <= 8375 + level1.scroll) &&
                 (player.kPos.Y >= 575) &&
                 (player.kPos.Y <= 675) &&
-                (doorOpen))
+                level1.DoorOpen)
             {
                 win = true;
                 dead = true;
