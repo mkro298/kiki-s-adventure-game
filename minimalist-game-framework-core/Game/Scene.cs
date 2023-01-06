@@ -151,6 +151,11 @@ class Scene
             Bounds2 hFrameBounds = new Bounds2(((int)(player.health / 100)) * 110, 0, 110, 20);
             Engine.DrawTexture(healthSheet, new Vector2(1000, 80), source: hFrameBounds, size: new Vector2(220, 40));
 
+            if (player.health >= 100)
+            {
+                dead = true;
+            }
+
             if (player.getKPosition().Y >= 1000)
             {
                 dead = true;
