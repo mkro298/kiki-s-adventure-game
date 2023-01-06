@@ -44,8 +44,10 @@ class Scene
     public static Player player = new Player(blocks);
     static EnemyManager enemyManager;
     static Level level1 = new Level(background2, background1, numBlocksLevel1, "assets/env coords.txt", "assets/level 1 enemies.txt");
+    static Level level2 = new Level(background1, background2, numBlocksLevel1, "assets/env coords.txt", "assets/level 1 enemies.txt");
 
     static int screen = 0;
+    static int numLevel = 1;
 
     public Scene()
     {
@@ -89,62 +91,17 @@ class Scene
             menuButtons();
         }
 
-        //level 1
+        //levels
         else if (screen == 3)
         {
-            if (dead)
+            if (numLevel == 1)
             {
-                dead = false;
-                level1.scroll = 0;
-                player = new Player(blocks);
-                player.kPos.X = 260;
-                player.kPos.Y = Resolution.Y / 2;
-                enemyManager = new EnemyManager(player);
-                enemyManager.initializeEnemies(level1.enemyFile);
-            }
-
-            if (Engine.GetKeyDown(Key.R))
+                UpdateLevel(level1);
+            } 
+            else if (numLevel == 2)
             {
-                reload();
+                UpdateLevel(level2);
             }
-            
-            if (player.points > 100)
-            {
-                level1.color = 1;
-            }
-
-            level1.Update();
-            player.Update(level1.scroll);
-            enemyManager.Update(level1.scroll);
-
-            menuButtons();
-            Engine.DrawString("Current Score: " + player.points.ToString(),
-                                new Vector2(1000, 50), Color.White, font);
-            Bounds2 hFrameBounds = new Bounds2(((int)(player.health / 100)) * 110, 0, 110, 20);
-            Engine.DrawTexture(healthSheet, new Vector2(1000, 80), source: hFrameBounds, size: new Vector2(220, 40));
-
-            if (player.getKPosition().Y >= 1000)
-            {
-                dead = true;
-            }
-
-            if (dead == true)
-            {
-                win = false;
-                screen++;
-            }
-
-            if ((player.kPos.X >= 8300 + level1.scroll) &&
-                (player.kPos.X <= 8375 + level1.scroll) &&
-                (player.kPos.Y >= 575) &&
-                (player.kPos.Y <= 675) &&
-                level1.DoorOpen)
-            {
-                win = true;
-                dead = true;
-                screen++;
-            }
-
         }
 
         //game over screen
@@ -315,5 +272,63 @@ class Scene
         }
         player.updateBlocks(blocks);
         sr.Close();
+    }
+
+    private static void UpdateLevel(Level level)
+    {
+        if (dead)
+        {
+            dead = false;
+            level.scroll = 0;
+            player = new Player(blocks);
+            player.kPos.X = 260;
+            player.kPos.Y = Resolution.Y / 2;
+            enemyManager = new EnemyManager(player);
+            enemyManager.initializeEnemies(level.enemyFile);
+        }
+
+        if (Engine.GetKeyDown(Key.R))
+        {
+            reload();
+        }
+
+        if (player.points > 100)
+        {
+            level.color = 1;
+        }
+
+        level.Update();
+        player.Update(level.scroll);
+        enemyManager.Update(level.scroll);
+
+        menuButtons();
+        Engine.DrawString("Current Score: " + player.points.ToString(),
+                            new Vector2(1000, 50), Color.White, font);
+        Bounds2 hFrameBounds = new Bounds2(((int)(player.health / 100)) * 110, 0, 110, 20);
+        Engine.DrawTexture(healthSheet, new Vector2(1000, 80), source: hFrameBounds, size: new Vector2(220, 40));
+
+        if (player.getKPosition().Y >= 1000)
+        {
+            dead = true;
+        }
+
+        if (dead == true)
+        {
+            win = false;
+            screen++;
+        }
+
+        if ((player.kPos.X >= 8300 + level.scroll) &&
+            (player.kPos.X <= 8375 + level.scroll) &&
+            (player.kPos.Y >= 575) &&
+            (player.kPos.Y <= 675) &&
+            level.DoorOpen)
+        {
+            win = true;
+            dead = true;
+            screen++;
+            numLevel++;
+        }
+
     }
 }

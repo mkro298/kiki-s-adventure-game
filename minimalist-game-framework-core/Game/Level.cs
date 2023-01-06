@@ -10,7 +10,7 @@ class Level
     public int scroll;
     String envCoords;
     public String enemyFile;
-    public int color = 0;
+    public int color = 1;
     public Boolean DoorOpen;
 
     public Level(Texture backgroundColor, Texture backgroundGrey, int numBlocks, String envCoords, String enemyFile)
