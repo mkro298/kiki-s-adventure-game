@@ -9,15 +9,17 @@ class Level
     int numBlocks;
     public int scroll;
     String envCoords;
+    public String enemyFile;
     public int color = 0;
     public Boolean DoorOpen;
 
-    public Level(Texture backgroundColor, Texture backgroundGrey, int numBlocks,String envCoords)
+    public Level(Texture backgroundColor, Texture backgroundGrey, int numBlocks, String envCoords, String enemyFile)
     {
         this.backgroundColor = backgroundColor;
         this.backgroundGrey = backgroundGrey;
         this.numBlocks = numBlocks;
         this.envCoords = envCoords;
+        this.enemyFile = enemyFile;
         Reload(this.envCoords);
     }
 

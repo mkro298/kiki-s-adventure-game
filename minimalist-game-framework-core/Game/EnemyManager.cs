@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Text;
 
@@ -12,13 +13,17 @@ class EnemyManager
         pl = a;
     } 
 
-    public void initializeEnemies()
+    public void initializeEnemies(String file)
     {
-       // enemies.Add(new Enemy(0,pl, 400, 450, 480));
-        enemies.Add(new Enemy(1, pl, 900, 990, 358));
-        enemies.Add(new Enemy(2, pl, 1780, 1900, 582));
-        enemies.Add(new Enemy(3, pl, 3800, 4100, 508));
-        enemies.Add(new Enemy(4, pl, 4800, 4900, 582));
+        StreamReader sr = new StreamReader(file);
+        while (!sr.EndOfStream)
+        {
+            string line = sr.ReadLine();
+            string[] nums = line.Split(' ');
+
+            enemies.Add(new Enemy(Int32.Parse(nums[0]), pl, Int32.Parse(nums[1]), Int32.Parse(nums[2]), Int32.Parse(nums[3])));
+        }
+        sr.Close();
     }
 
     public void Update(int scroll)

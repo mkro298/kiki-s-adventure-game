@@ -43,7 +43,7 @@ class Scene
     public static Block[] blocks;
     public static Player player = new Player(blocks);
     static EnemyManager enemyManager;
-    static Level level1 = new Level(background2, background1, numBlocksLevel1, "assets/env coords.txt");
+    static Level level1 = new Level(background2, background1, numBlocksLevel1, "assets/env coords.txt", "assets/level 1 enemies.txt");
 
     static int screen = 0;
 
@@ -100,7 +100,7 @@ class Scene
                 player.kPos.X = 260;
                 player.kPos.Y = Resolution.Y / 2;
                 enemyManager = new EnemyManager(player);
-                enemyManager.initializeEnemies();
+                enemyManager.initializeEnemies(level1.enemyFile);
             }
 
             if (Engine.GetKeyDown(Key.R))
