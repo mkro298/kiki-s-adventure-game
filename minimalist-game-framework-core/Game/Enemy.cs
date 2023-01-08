@@ -65,6 +65,10 @@ class Enemy
             if(enemyPos.X >= pl.kPos.X)
             {
                 pl.bounceBack = true;
+                pl.kVel.X += 20 * Engine.TimeDelta + 5;
+                pl.kVel.Y += Game.speed * 4;
+                pl.kPos.X -= pl.kVel.X;
+                pl.kPos.Y -= pl.kVel.Y;
             }
             else
             {
