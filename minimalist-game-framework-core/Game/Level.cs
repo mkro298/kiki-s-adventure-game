@@ -8,7 +8,7 @@ class Level
     Texture backgroundGrey;
     int numBlocks;
     public int scroll;
-    String envCoords;
+    public String envCoords;
     public String enemyFile;
     public int color = 1;
     public Boolean DoorOpen;

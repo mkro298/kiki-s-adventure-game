@@ -35,16 +35,17 @@ class Scene
     // door
     public static Texture door = Engine.LoadTexture("door.png");
 
-    static readonly Texture background1 = Engine.LoadTexture("Kirby red level background - Grayscale.png");
-    static readonly Texture background2 = Engine.LoadTexture("Kirby red level background.png");
+    static readonly Texture backgroundGrey = Engine.LoadTexture("Kirby red level background - Grayscale.png");
+    static readonly Texture backgroundColor = Engine.LoadTexture("Kirby red level background.png");
     static Font font = Engine.LoadFont("font.ttf", 20);
-    static int numBlocksLevel1 = 202;
+    static int numBlocksLevel1 = 122;
+    static int numBlocksLevel2 = 202;
 
     public static Block[] blocks;
     public static Player player = new Player(blocks);
     static EnemyManager enemyManager;
-    static Level level1 = new Level(background2, background1, numBlocksLevel1, "assets/env coords.txt", "assets/level 1 enemies.txt");
-    static Level level2 = new Level(background1, background2, numBlocksLevel1, "assets/env coords.txt", "assets/level 1 enemies.txt");
+    static Level level1 = new Level(backgroundColor, backgroundGrey, numBlocksLevel1, "assets/trial level coords.txt", "assets/level 1 enemies.txt");
+    static Level level2 = new Level(backgroundColor, backgroundGrey, numBlocksLevel2, "assets/env coords.txt", "assets/level 1 enemies.txt");
 
     static int screen = 0;
     static int numLevel = 1;
@@ -261,7 +262,7 @@ class Scene
     public static void reload()
     {
         Engine.reload();
-        StreamReader sr = new StreamReader("assets/env coords.txt");
+        StreamReader sr = new StreamReader(level1.envCoords);
         blocks = new Block[numBlocksLevel1];
         for (int i = 0; i < blocks.Length; i++)
         {
