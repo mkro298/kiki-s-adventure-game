@@ -61,9 +61,14 @@ class Enemy
 
         if (Math.Abs((enemyPos.X - 8 + scroll) - pl.kPos.X) < 70 && Math.Abs(enemyPos.Y - pl.kPos.Y) < 20)
         {
+            pl.enemyCollision();
             if(enemyPos.X >= pl.kPos.X)
             {
                 pl.bounceBack = true;
+                pl.kVel.X += 20 * Engine.TimeDelta + 5;
+                pl.kVel.Y += Game.speed * 4;
+                pl.kPos.X -= pl.kVel.X;
+                pl.kPos.Y -= pl.kVel.Y;
             }
             else
             {
