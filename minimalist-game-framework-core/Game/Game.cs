@@ -21,7 +21,6 @@ class Game
     {
         Scene.reload();
         enemyManager = new EnemyManager(player);
-        enemyManager.initializeEnemies();
 
         dead = true;
 
