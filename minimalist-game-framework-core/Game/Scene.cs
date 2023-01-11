@@ -62,8 +62,8 @@ class Scene
     public static Block[] blocks;
     public static Player player = new Player(blocks);
     static EnemyManager enemyManager;
-    static Level level1 = new Level(backgroundColor, backgroundGrey, numBlocksLevel1, "Assets/trial level coords.txt", "level 1 enemies.txt");
-    static Level level2 = new Level(backgroundColor, backgroundGrey, numBlocksLevel2, "Assets/env coords.txt", "level 1 enemies.txt");
+    static Level level1 = new Level(backgroundColor, backgroundGrey, numBlocksLevel1, "Assets/trial level coords.txt", "Assets/level 1 enemies.txt");
+    static Level level2 = new Level(backgroundColor, backgroundGrey, numBlocksLevel2, "Assets/env coords.txt", "Assets/level 1 enemies.txt");
 
     static int screen = 0;
     static int numLevel = 1;
@@ -127,7 +127,7 @@ class Scene
 
 
         //levels
-        else if (screen == 3)
+        else if (screen == 4)
         {
             if (numLevel == 1)
             {

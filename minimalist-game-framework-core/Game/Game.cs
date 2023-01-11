@@ -30,7 +30,7 @@ class Game
         {
             Engine.PlayMusic(music);
             time = 0;
-        }
+        } 
     }
 
     public void Update()

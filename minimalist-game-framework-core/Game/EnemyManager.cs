@@ -15,7 +15,7 @@ class EnemyManager
 
     public void initializeEnemies(String file)
     {
-        StreamReader sr = new StreamReader(file);
+        StreamReader sr = new StreamReader(file); 
         while (!sr.EndOfStream)
         {
             string line = sr.ReadLine();
