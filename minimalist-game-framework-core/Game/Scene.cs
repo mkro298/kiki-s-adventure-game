@@ -47,8 +47,8 @@ class Scene
     static Texture quitButton = Engine.LoadTexture("quitButton.png");
 
     //level buttons
-    static Texture level1 = Engine.LoadTexture("level1.png");
-    static Texture level2 = Engine.LoadTexture("level2.png");
+    static Texture lvl1 = Engine.LoadTexture("level1.png");
+    static Texture lvl2 = Engine.LoadTexture("level2.png");
     static Boolean [] levels = { true, false };
 
     // door
@@ -63,8 +63,8 @@ class Scene
     public static Block[] blocks;
     public static Player player = new Player(blocks);
     static EnemyManager enemyManager;
-    static Level level1 = new Level(backgroundColor, backgroundGrey, numBlocksLevel1, "assets/trial level coords.txt", "assets/level 1 enemies.txt");
-    static Level level2 = new Level(backgroundColor, backgroundGrey, numBlocksLevel2, "assets/env coords.txt", "assets/level 1 enemies.txt");
+    static Level level1 = new Level(backgroundColor, backgroundGrey, numBlocksLevel1, "Assets/trial level coords.txt", "Assets/level 1 enemies.txt");
+    static Level level2 = new Level(backgroundColor, backgroundGrey, numBlocksLevel2, "Assets/env coords.txt", "Assets/level 1 enemies.txt");
 
     static int screen = 0;
     static int numLevel = 1;
@@ -103,8 +103,8 @@ class Scene
             button(storyLongButton, 740, 380, 300, 60, 8);
             button(quitButton, 740, 460, 300, 60, 0);
 
-            levelButtons(300,350, 1, level1);
-            levelButtons(430, 350, 2, level2);
+            levelButtons(300,350, 1, lvl1);
+            levelButtons(430, 350, 2, lvl2);
 
         }
         //1st instructions screen
