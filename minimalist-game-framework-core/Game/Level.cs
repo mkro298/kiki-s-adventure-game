@@ -42,7 +42,7 @@ class Level
         for (int i = 0; i < Scene.blocks.Length; i++)
         {
             Scene.blocks[i].draw(scroll);
-        }
+        } 
 
         //adjust scroll
         if (Engine.GetKeyHeld(Key.Right) && Scene.player.getKPosition().X >= 940 && scroll >= -7425 && Scene.player.getMoveRight())

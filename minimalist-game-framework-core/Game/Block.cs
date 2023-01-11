@@ -62,7 +62,7 @@ class Block
         Color color = Color.Black;
         Engine.DrawRectSolid(new Bounds2(new Vector2(leftbound, upperbound), new Vector2(blockSize, blockSize)), Color.Black);
     }
-    public void draw(int scroll)
+    public void draw(int scroll) 
     {
         Color color = Color.Black;
         Engine.DrawRectSolid(new Bounds2(new Vector2(leftbound + scroll, upperbound), new Vector2(blockSize, blockSize)), Color.Black);
