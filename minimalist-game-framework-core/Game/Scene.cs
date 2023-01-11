@@ -9,7 +9,6 @@ class Scene
     static Boolean win = false; // tells whether player passed the level
     static Boolean dead = true;
     static Boolean menuOpen = false; // tells us if menu is open or not
-    //static Boolean doorOpen = false; //tells whether door is open
 
     //textures for screens
     static Texture start = Engine.LoadTexture("start.png");
@@ -128,7 +127,7 @@ class Scene
 
 
         //levels
-        else if (screen == 3)
+        else if (screen == 4)
         {
             if (numLevel == 1)
             {
@@ -270,6 +269,7 @@ class Scene
             if (Engine.GetMouseButtonDown(MouseButton.Left) || Engine.GetMouseButtonDown(MouseButton.Right))
             {
                 screen--;
+                menuOpen = false;
             }
         }
         else
@@ -284,6 +284,7 @@ class Scene
             if (Engine.GetMouseButtonDown(MouseButton.Left) || Engine.GetMouseButtonDown(MouseButton.Right))
             {
                 screen++;
+                menuOpen = false;
             }
         }
         else
