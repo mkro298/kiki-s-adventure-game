@@ -4,36 +4,41 @@ using System.Collections.Generic;
 
 class Level 
 {
-    Texture backgroundColor;
-    Texture backgroundGrey;
+    Texture [] background;
     int numBlocks;
     public int scroll;
     public String envCoords;
     public String enemyFile;
-    public int color = 1;
+    public int color = 0;
     public Boolean DoorOpen;
+    public int minPoints;
 
-    public Level(Texture backgroundColor, Texture backgroundGrey, int numBlocks, String envCoords, String enemyFile)
+    public Level(Texture [] background, int numBlocks, String envCoords, String enemyFile, int minPoints)
     {
-        this.backgroundColor = backgroundColor;
-        this.backgroundGrey = backgroundGrey;
+        this.background = background;
         this.numBlocks = numBlocks;
         this.envCoords = envCoords;
         this.enemyFile = enemyFile;
+        this.minPoints = minPoints;
         Reload(this.envCoords);
     }
 
     public void Update()
     {
-        if (color == 1)
+        Engine.DrawTexture(background[color], Vector2.Zero);
+
+        if ((Scene.player.points >= minPoints)&&(color<5))
         {
-            Engine.DrawTexture(backgroundColor, Vector2.Zero);
+            color++;
+        }
+
+        if (color == 5)
+        {
             Engine.DrawTexture(Scene.door, new Vector2(8300 + scroll, 575), source: new Bounds2(75, 0, 75, 100));
             DoorOpen = true;
         }
         else
         {
-            Engine.DrawTexture(backgroundGrey, Vector2.Zero);
             Engine.DrawTexture(Scene.door, new Vector2(8300 + scroll, 575), source: new Bounds2(0, 0, 75, 100));
         }
 
