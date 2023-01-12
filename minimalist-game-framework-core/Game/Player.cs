@@ -10,6 +10,7 @@ class Player
     static readonly float Framerate = 10;
     static readonly float WalkSpeed = Game.speed;
 
+    
     //Load basic sprite sheet
     Texture tex = Engine.LoadTexture("basic.png");
     Texture powers = Engine.LoadTexture("powers.png");
@@ -34,7 +35,12 @@ class Player
     bool canMoveLeft = true;
     bool canMoveRight = true;
     int jumps = 0;
-
+    // Variables keeping track of player input
+    bool goLeft = false;
+    bool goRight = false;
+    bool goUp = false;
+    bool goPower = false;
+    bool goBounce = false;
     public bool bounceBack = false;
     public bool bounceForward = false;
 
