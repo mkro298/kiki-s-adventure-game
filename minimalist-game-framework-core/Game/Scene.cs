@@ -53,8 +53,26 @@ class Scene
     // door
     public static Texture door = Engine.LoadTexture("door.png");
 
-    static readonly Texture backgroundGrey = Engine.LoadTexture("Kirby red level background - Grayscale.png");
-    static readonly Texture backgroundColor = Engine.LoadTexture("Kirby red level background.png");
+    static readonly Texture backgroundGrey1 = Engine.LoadTexture("forest.png");
+    static readonly Texture backgroundColor1 = Engine.LoadTexture("forest greyscale1.png");
+
+    static readonly Texture[] background1 = { Engine.LoadTexture("forest greyscale1.png"),
+                                              Engine.LoadTexture("forest greyscale2.png"),
+                                              Engine.LoadTexture("forest greyscale3.png"),
+                                              Engine.LoadTexture("forest greyscale4.png"),
+                                              Engine.LoadTexture("forest greyscale5.png"),
+                                              Engine.LoadTexture("forest.png")};
+
+    static readonly Texture backgroundGrey2 = Engine.LoadTexture("fire cliffs.png");
+    static readonly Texture backgroundColor2 = Engine.LoadTexture("fire cliffs greyscale1.png");
+
+    static readonly Texture[] background2 = { Engine.LoadTexture("fire cliffs greyscale1.png"),
+                                              Engine.LoadTexture("fire cliffs greyscale2.png"),
+                                              Engine.LoadTexture("fire cliffs greyscale3.png"),
+                                              Engine.LoadTexture("fire cliffs greyscale4.png"),
+                                              Engine.LoadTexture("fire cliffs greyscale5.png"),
+                                              Engine.LoadTexture("fire cliffs.png")};
+
     static Font font = Engine.LoadFont("font.ttf", 20);
     static int numBlocksLevel1 = 122;
     static int numBlocksLevel2 = 202;
@@ -62,8 +80,8 @@ class Scene
     public static Block[] blocks;
     public static Player player = new Player(blocks);
     static EnemyManager enemyManager;
-    static Level level1 = new Level(backgroundColor, backgroundGrey, numBlocksLevel1, "Assets/trial level coords.txt", "Assets/level 1 enemies.txt");
-    static Level level2 = new Level(backgroundColor, backgroundGrey, numBlocksLevel2, "Assets/env coords.txt", "Assets/level 1 enemies.txt");
+    static Level level1 = new Level(backgroundColor1, backgroundGrey1, numBlocksLevel1, "Assets/trial level coords.txt", "Assets/level 1 enemies.txt");
+    static Level level2 = new Level(backgroundColor2, backgroundGrey2, numBlocksLevel2, "Assets/env coords.txt", "Assets/level 1 enemies.txt");
 
     static int screen = 0;
     static int numLevel = 1;
@@ -129,6 +147,7 @@ class Scene
         //levels
         else if (screen == 4)
         {
+
             if (numLevel == 1)
             {
                 UpdateLevel(level1);
@@ -149,12 +168,13 @@ class Scene
             }
             else
             {
-                menuButtons();
+                
                 Engine.DrawTexture(gameover, Vector2.Zero);
                 Engine.DrawString("High Score: " + player.highScore(), new Vector2(550, 100), Color.White, font);
+                
                 if ((Engine.GetMouseButtonDown(MouseButton.Left)) && (!menuOpen))
                 {
-                    screen = 6;
+                    screen = 4;
                 }
             }
 
@@ -458,7 +478,7 @@ class Scene
         Engine.DrawString("Current Score: " + player.points.ToString(),
                             new Vector2(1000, 50), Color.White, font);
         Bounds2 hFrameBounds = new Bounds2(((int)(player.health / 100)) * 110, 0, 110, 20);
-        Engine.DrawTexture(healthSheet, new Vector2(1000, 80), source: hFrameBounds, size: new Vector2(220, 40));
+        Engine.DrawTexture(healthSheet, new Vector2(985, 80), source: hFrameBounds, size: new Vector2(220, 40));
 
         if (player.getKPosition().Y >= 1000)
         {
