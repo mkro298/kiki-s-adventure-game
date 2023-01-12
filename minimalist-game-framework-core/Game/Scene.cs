@@ -53,18 +53,12 @@ class Scene
     // door
     public static Texture door = Engine.LoadTexture("door.png");
 
-    static readonly Texture backgroundGrey1 = Engine.LoadTexture("forest.png");
-    static readonly Texture backgroundColor1 = Engine.LoadTexture("forest greyscale1.png");
-
     static readonly Texture[] background1 = { Engine.LoadTexture("forest greyscale1.png"),
                                               Engine.LoadTexture("forest greyscale2.png"),
                                               Engine.LoadTexture("forest greyscale3.png"),
                                               Engine.LoadTexture("forest greyscale4.png"),
                                               Engine.LoadTexture("forest greyscale5.png"),
                                               Engine.LoadTexture("forest.png")};
-
-    static readonly Texture backgroundGrey2 = Engine.LoadTexture("fire cliffs.png");
-    static readonly Texture backgroundColor2 = Engine.LoadTexture("fire cliffs greyscale1.png");
 
     static readonly Texture[] background2 = { Engine.LoadTexture("fire cliffs greyscale1.png"),
                                               Engine.LoadTexture("fire cliffs greyscale2.png"),
@@ -80,8 +74,8 @@ class Scene
     public static Block[] blocks;
     public static Player player = new Player(blocks);
     static EnemyManager enemyManager;
-    static Level level1 = new Level(backgroundColor1, backgroundGrey1, numBlocksLevel1, "Assets/trial level coords.txt", "Assets/level 1 enemies.txt");
-    static Level level2 = new Level(backgroundColor2, backgroundGrey2, numBlocksLevel2, "Assets/env coords.txt", "Assets/level 1 enemies.txt");
+    static Level level1 = new Level(background1, numBlocksLevel1, "Assets/trial level coords.txt", "Assets/level 1 enemies.txt", 100);
+    static Level level2 = new Level(background2, numBlocksLevel2, "Assets/env coords.txt", "Assets/level 1 enemies.txt",150);
 
     static int screen = 0;
     static int numLevel = 1;
