@@ -59,7 +59,7 @@ class Player
 
     public void enemyCollision()
     {
-        health += 20;
+        health += 100;
     }
 
     public String highScore()

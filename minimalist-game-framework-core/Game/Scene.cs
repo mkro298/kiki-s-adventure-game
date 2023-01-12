@@ -484,6 +484,10 @@ class Scene
         {
             dead = true;
         }
+        if (player.health >= 500)
+        {
+            dead = true;
+        }
 
         if (dead == true)
         {
