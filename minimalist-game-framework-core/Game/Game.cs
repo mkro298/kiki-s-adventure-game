@@ -16,13 +16,15 @@ class Game
     Player player = new Player(blocks);
     Scene scene = new Scene();
 
+    EnemyManager enemyManager;
+
     public Game()
     {
         Scene.reload();
 
         PlayerInput controller = new PlayerInput(player);
 
-        enemyManager = new EnemyManager(player);
+        enemyManager = new EnemyManager(player, Scene.levels);
 
         dead = true;
 
