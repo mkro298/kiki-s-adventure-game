@@ -217,7 +217,7 @@ class Player
             bound = 100;
             inhale = true;
         }
-        if (usingPower||(Engine.GetKeyDown(Key.P)&&currP!=-1))
+        if (usingPower||((Engine.GetKeyDown(Key.LeftAlt)|| Engine.GetKeyDown(Key.RightAlt)) &&currP!=-1))
         {
             texK = powers;
             kIdle = false;
