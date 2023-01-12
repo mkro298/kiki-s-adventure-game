@@ -14,14 +14,11 @@ class Game
     
     static Block[] blocks;
     Player player = new Player(blocks);
-    EnemyManager enemyManager;
     Scene scene = new Scene();
 
     public Game()
     {
         Scene.reload();
-        enemyManager = new EnemyManager(player);
-
         dead = true;
 
         

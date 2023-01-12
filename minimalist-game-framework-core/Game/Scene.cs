@@ -63,7 +63,7 @@ class Scene
     public static Player player = new Player(blocks);
     static EnemyManager enemyManager;
     static Level level1 = new Level(backgroundColor, backgroundGrey, numBlocksLevel1, "Assets/trial level coords.txt", "Assets/level 1 enemies.txt");
-    static Level level2 = new Level(backgroundColor, backgroundGrey, numBlocksLevel2, "Assets/env coords.txt", "Assets/level 1 enemies.txt");
+    static Level level2 = new Level(backgroundColor, backgroundGrey, numBlocksLevel2, "Assets/env coords.txt", "Assets/level 2 enemies.txt");
 
     static int screen = 0;
     static int numLevel = 1;
@@ -436,7 +436,7 @@ class Scene
             player = new Player(blocks);
             player.kPos.X = 260;
             player.kPos.Y = Resolution.Y / 2;
-            enemyManager = new EnemyManager(player);
+            enemyManager = new EnemyManager(player, levels);
             enemyManager.initializeEnemies(level.enemyFile);
         }
 
