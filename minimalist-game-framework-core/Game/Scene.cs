@@ -48,7 +48,7 @@ class Scene
     //level buttons
     static Texture lvl1 = Engine.LoadTexture("level1.png");
     static Texture lvl2 = Engine.LoadTexture("level2.png");
-    static Boolean [] levels = { true, false };
+    public static Boolean [] levels = { true, false };
 
     // door
     public static Texture door = Engine.LoadTexture("door.png");
@@ -68,14 +68,16 @@ class Scene
                                               Engine.LoadTexture("fire cliffs.png")};
 
     static Font font = Engine.LoadFont("font.ttf", 20);
-    static int numBlocksLevel1 = 122;
+    static int numBlocksLevel1 = 124;
     static int numBlocksLevel2 = 202;
 
     public static Block[] blocks;
     public static Player player = new Player(blocks);
     static EnemyManager enemyManager;
-    static Level level1 = new Level(backgroundColor, backgroundGrey, numBlocksLevel1, "Assets/trial level coords.txt", "Assets/level 1 enemies.txt");
-    static Level level2 = new Level(backgroundColor, backgroundGrey, numBlocksLevel2, "Assets/env coords.txt", "Assets/level 2 enemies.txt");
+    static Level level1 = new Level(background1, numBlocksLevel1,
+        "Assets/trial level coords.txt", "Assets/level 1 enemies.txt",100);
+    static Level level2 = new Level(background2,numBlocksLevel2,
+        "Assets/env coords.txt", "Assets/level 2 enemies.txt",150);
 
 
     static int screen = 0;
