@@ -19,6 +19,11 @@ class Game
     public Game()
     {
         Scene.reload();
+
+        PlayerInput controller = new PlayerInput(player);
+
+        enemyManager = new EnemyManager(player);
+
         dead = true;
 
         
