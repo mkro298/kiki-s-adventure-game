@@ -6,11 +6,13 @@ using System.Text;
 class EnemyManager
 {
     List<Enemy> enemies = new List<Enemy>();
+    Boolean[] levels;
     Player pl;
 
-    public EnemyManager(Player a)
+    public EnemyManager(Player a, Boolean[] levelsParam)
     {
         pl = a;
+        levels = levelsParam;
     } 
 
     public void initializeEnemies(String file)
@@ -20,8 +22,16 @@ class EnemyManager
         {
             string line = sr.ReadLine();
             string[] nums = line.Split(' ');
-
-            enemies.Add(new Enemy(Int32.Parse(nums[0]), pl, Int32.Parse(nums[1]), Int32.Parse(nums[2]), Int32.Parse(nums[3])));
+            if (levels[0] == true)
+            {
+                enemies.RemoveAll();
+                enemies.Add(new Enemy(Int32.Parse(nums[0]), pl, Int32.Parse(nums[1]), Int32.Parse(nums[2]), Int32.Parse(nums[3])));
+            } else if (levels[1] == true)
+            {
+                enemies.RemoveAll();
+                enemies.Add(new Enemy(Int32.Parse(nums[0]), pl, Int32.Parse(nums[1]), Int32.Parse(nums[2]), Int32.Parse(nums[3])));
+            }
+            
         }
         sr.Close();
     }

@@ -14,12 +14,12 @@ class Game
     
     static Block[] blocks;
     Player player = new Player(blocks);
-    EnemyManager enemyManager;
     Scene scene = new Scene();
 
     public Game()
     {
         Scene.reload();
+
         PlayerInput controller = new PlayerInput(player);
 
         enemyManager = new EnemyManager(player);
