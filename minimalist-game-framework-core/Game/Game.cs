@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 class Game
 {
-    public static readonly string Title = "Minimalist Game Framework";
+    public static readonly string Title = "Kiki";
     public static readonly Vector2 Resolution = new Vector2(1275, 750);
     
     Boolean dead = true;
@@ -21,8 +21,6 @@ class Game
         Scene.reload();
 
         PlayerInput controller = new PlayerInput(player);
-
-        enemyManager = new EnemyManager(player);
 
         dead = true;
 
