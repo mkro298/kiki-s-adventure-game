@@ -8,7 +8,7 @@ class Game
     public static readonly Vector2 Resolution = new Vector2(1275, 750);
 
     Boolean dead = true;
-    Double time = 0;
+    Double time = 0; 
     Music music = Engine.LoadMusic("Kiki.mp3");
     public static int speed = 5;
     

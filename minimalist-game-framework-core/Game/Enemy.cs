@@ -52,6 +52,14 @@ class Enemy
         if ((!hit&&pl.inhale == true && Math.Abs((enemyPos.X-8+scroll)-pl.kPos.X)<150 && Math.Abs(enemyPos.Y-pl.kPos.Y)<80)|| (!hit && pl.usingPower == true && Math.Abs((enemyPos.X - 8 + scroll) - pl.kPos.X) < 200 && Math.Abs(enemyPos.Y - pl.kPos.Y) < 80))
         {
             pl.enemyHit(this);
+            if (pl.currP == -1)
+            {
+                pl.currP = power;
+            }
+            else
+            {
+                pl.quedP = power;
+            }
             hit = true;
             spriteSheet = enemyDeath; 
             frames = 9;

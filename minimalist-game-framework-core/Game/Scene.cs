@@ -464,7 +464,7 @@ class Scene
         {
             reload();
         }
-
+         
         if (player.points > 100)
         {
             level.color = 1;
