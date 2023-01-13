@@ -19,7 +19,7 @@ class Player
     float frames = 6.0f;
     int bound = 100;
     public int currP = -1;
-    int prevP = -1;
+    public int quedP = -1;
 
     // Keep track of K's state:
     public Vector2 kPos = Resolution / 2;
@@ -237,7 +237,11 @@ class Player
         if (kFrameIndex > 11 && usingPower)
         {
             usingPower = false; 
-            currP = -1;
+            if(quedP == -1)
+            {
+                currP = -1;
+            }
+            quedP = -1;
         }
         Bounds2 kFrameBounds = new Bounds2(((int)kFrameIndex) * bound, kIdle ? 0 : yCoord, bound, 100);
         // Draw sprite
