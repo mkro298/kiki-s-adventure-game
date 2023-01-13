@@ -208,12 +208,6 @@ class Player
         }
         kPos.Y -= kVel.Y;
 
-        if (kPos.Y < -50)
-        {
-            kVel.Y = 0;
-            kPos.Y = -49;
-        }
-
         // For inhaling
         if (Engine.GetKeyHeld(Key.Space))
         {

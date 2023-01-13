@@ -17,6 +17,7 @@ class EnemyManager
 
     public void initializeEnemies(String file)
     {
+        enemies.Clear();
         StreamReader sr = new StreamReader(file); 
         while (!sr.EndOfStream)
         {
@@ -24,11 +25,9 @@ class EnemyManager
             string[] nums = line.Split(' ');
             if (levels[0] == true)
             {
-                enemies.Clear();
                 enemies.Add(new Enemy(Int32.Parse(nums[0]), pl, Int32.Parse(nums[1]), Int32.Parse(nums[2]), Int32.Parse(nums[3])));
             } else if (levels[1] == true)
-            {
-                enemies.Clear();
+            { 
                 enemies.Add(new Enemy(Int32.Parse(nums[0]), pl, Int32.Parse(nums[1]), Int32.Parse(nums[2]), Int32.Parse(nums[3])));
             }
             
