@@ -12,14 +12,21 @@ class Level
     public int color = 0;
     public Boolean DoorOpen;
     public int minPoints;
+    public int doorX;
+    public int doorY;
+    public int scrollBound;
 
-    public Level(Texture [] background, int numBlocks, String envCoords, String enemyFile, int minPoints)
+    public Level(Texture [] background, int numBlocks, String envCoords, 
+                 String enemyFile, int minPoints, int doorX, int doorY, int scrollBound)
     {
         this.background = background;
         this.numBlocks = numBlocks;
         this.envCoords = envCoords;
         this.enemyFile = enemyFile;
         this.minPoints = minPoints;
+        this.doorX = doorX;
+        this.doorY = doorY;
+        this.scrollBound = scrollBound;
         Reload(this.envCoords);
     }
 
@@ -34,12 +41,12 @@ class Level
 
         if (color == 5)
         {
-            Engine.DrawTexture(Scene.door, new Vector2(8300 + scroll, 575), source: new Bounds2(75, 0, 75, 100));
+            Engine.DrawTexture(Scene.door, new Vector2(doorX + scroll, doorY), source: new Bounds2(75, 0, 75, 100));
             DoorOpen = true;
         }
         else
         {
-            Engine.DrawTexture(Scene.door, new Vector2(8300 + scroll, 575), source: new Bounds2(0, 0, 75, 100));
+            Engine.DrawTexture(Scene.door, new Vector2(doorX + scroll, doorY), source: new Bounds2(0, 0, 75, 100));
         }
 
 
@@ -50,7 +57,7 @@ class Level
         } 
 
         //adjust scroll
-        if (Engine.GetKeyHeld(Key.Right) && Scene.player.getKPosition().X >= 940 && scroll >= -7425 && Scene.player.getMoveRight())
+        if (Engine.GetKeyHeld(Key.Right) && Scene.player.getKPosition().X >= 940 && scroll >= scrollBound && Scene.player.getMoveRight())
         {
             scroll -= Game.speed;
         }
