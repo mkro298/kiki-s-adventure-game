@@ -78,7 +78,7 @@ class Scene
     public static Player player = new Player(blocks);
     static EnemyManager enemyManager;
     static Level level1 = new Level(background1, numBlocksLevel1,
-        "Assets/trial level coords.txt", "Assets/enemyCoordsL1.txt", 100, 5175, 500, -4275);
+        "Assets/trial level coords.txt", "Assets/enemyCoordsL1.txt", 50, 5175, 500, -4275);
     static Level level2 = new Level(background2,numBlocksLevel2,
         "Assets/env coords.txt", "Assets/level 1 enemies.txt", 150, 8300, 575, -7425);
 
