@@ -216,7 +216,7 @@ class Player
             frames = 6.0f;
             bound = 100;
             inhale = true;
-        }
+        } 
         if (usingPower||((Engine.GetKeyDown(Key.LeftAlt)|| Engine.GetKeyDown(Key.RightAlt)) &&currP!=-1))
         {
             texK = powers;
