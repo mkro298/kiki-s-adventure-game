@@ -22,6 +22,7 @@ class Enemy
     Boolean enemyHit = false;
     public Boolean isAlive = true;
     public Boolean hit = false;
+    Boolean noTransfer = false;
     int framesDrawn = 0;
     int yCoord;
 
@@ -49,22 +50,23 @@ class Enemy
 
     public void hitPlayer(int scroll)
     { 
-        if ((!hit&&pl.inhale == true && Math.Abs((enemyPos.X-8+scroll)-pl.kPos.X)<150 && Math.Abs(enemyPos.Y-pl.kPos.Y)<80)|| (!hit && pl.usingPower == true && Math.Abs((enemyPos.X - 8 + scroll) - pl.kPos.X) < 200 && Math.Abs(enemyPos.Y - pl.kPos.Y) < 80))
+        if (!hit&&pl.inhale == true && Math.Abs((enemyPos.X-8+scroll)-pl.kPos.X)<150 && Math.Abs(enemyPos.Y-pl.kPos.Y)<80)
         {
             pl.enemyHit(this);
-            if (pl.currP == -1)
-            {
-                pl.currP = power;
-            }
-            else
-            {
-                pl.quedP = power;
-            }
             hit = true;
             spriteSheet = enemyDeath; 
             frames = 9;
             yCoord = 0;
             
+        }
+        else if(!hit && pl.usingPower == true && Math.Abs((enemyPos.X - 8 + scroll) - pl.kPos.X) < 200 && Math.Abs(enemyPos.Y - pl.kPos.Y) < 80)
+        {
+            pl.enemyHit(this);
+            hit = true;
+            spriteSheet = enemyDeath;
+            frames = 9;
+            yCoord = 0;
+            noTransfer = true;
         }
 
         if (Math.Abs((enemyPos.X - 8 + scroll) - pl.kPos.X) < 70 && Math.Abs(enemyPos.Y - pl.kPos.Y) < 20)
@@ -117,7 +119,10 @@ class Enemy
         if (eFrameIndex >= 8 && frames == 9)
         {
             isAlive = false;
-            pl.currP = power;
+            if (!noTransfer)
+            {
+                pl.currP = power;
+            }
         }
         Bounds2 eFrameBounds = new Bounds2(((int)eFrameIndex) * 100,yCoord*100, 100, 100);
 
