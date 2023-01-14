@@ -54,7 +54,8 @@ class Scene
     static Texture jump = Engine.LoadTexture("jump.png");
 
     // door
-    public static Texture door = Engine.LoadTexture("door.png");
+    public static Texture door1 = Engine.LoadTexture("door1.png");
+    public static Texture door2 = Engine.LoadTexture("door2.png");
 
     static readonly Texture[] background1 = { Engine.LoadTexture("forest greyscale1.png"),
                                               Engine.LoadTexture("forest greyscale2.png"),
@@ -70,7 +71,7 @@ class Scene
                                               Engine.LoadTexture("fire cliffs greyscale5.png"),
                                               Engine.LoadTexture("fire cliffs.png")};
 
-    static Font font = Engine.LoadFont("font.ttf", 20);
+    static public Font font = Engine.LoadFont("font.ttf", 20);
     static int numBlocksLevel1 = 124;
     static int numBlocksLevel2 = 202;
 
@@ -84,7 +85,7 @@ class Scene
 
 
     static int screen = 0;
-    static int numLevel = 1;
+    static public int numLevel = 1;
 
     public Scene()
     {
@@ -98,6 +99,11 @@ class Scene
 
     public static void Update()
     {
+        
+        if (screen < 4)
+        {
+            dead = true;
+        }
         
         //start screen
         if (screen == 0)
@@ -412,7 +418,8 @@ class Scene
                     bound = new Bounds2(100, 0, 100, 100);
                     if (Engine.GetMouseButtonDown(MouseButton.Left) || Engine.GetMouseButtonDown(MouseButton.Right))
                     {
-                        screen = 3 + lvl;
+                        screen = 4;
+                        numLevel = lvl;
                     }
                 }
                 else

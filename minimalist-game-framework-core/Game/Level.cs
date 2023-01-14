@@ -41,12 +41,28 @@ class Level
 
         if (color == 5)
         {
-            Engine.DrawTexture(Scene.door, new Vector2(doorX + scroll, doorY), source: new Bounds2(75, 0, 75, 100));
+            
+            if (Scene.numLevel == 1)
+            {
+                Engine.DrawTexture(Scene.door1, new Vector2(doorX + scroll, doorY), source: new Bounds2(75, 0, 75, 100));
+
+            }else if (Scene.numLevel == 2)
+            {
+                Engine.DrawTexture(Scene.door2, new Vector2(doorX + scroll, doorY), source: new Bounds2(75, 0, 75, 100));
+            }
+            
             DoorOpen = true;
         }
         else
         {
-            Engine.DrawTexture(Scene.door, new Vector2(doorX + scroll, doorY), source: new Bounds2(0, 0, 75, 100));
+            if (Scene.numLevel == 1)
+            {
+                Engine.DrawTexture(Scene.door1, new Vector2(doorX + scroll, doorY), source: new Bounds2(0, 0, 75, 100));
+            }
+            else if (Scene.numLevel == 2)
+            {
+                Engine.DrawTexture(Scene.door2, new Vector2(doorX + scroll, doorY), source: new Bounds2(0, 0, 75, 100));
+            }
         }
 
 
@@ -69,6 +85,34 @@ class Level
         for (int i = 0; i < Scene.blocks.Length; i++)
         {
             Scene.blocks[i].draw(scroll);
+        }
+
+        if (Scene.numLevel == 1)
+        {
+            Engine.DrawString("press the left/right", new Vector2(250 + scroll, 200), Color.White, Scene.font);
+            Engine.DrawString(" arrow keys to run", new Vector2(250 + scroll, 225), Color.White, Scene.font);
+
+            Engine.DrawString("press the up arrow", new Vector2(750 + scroll, 300), Color.White, Scene.font);
+            Engine.DrawString("     key to jump", new Vector2(750 + scroll, 325), Color.White, Scene.font);
+
+            Engine.DrawString("  press space to inhale", new Vector2(1875 + scroll, 200), Color.White, Scene.font);
+            Engine.DrawString("enemies and gain powers", new Vector2(1875 + scroll, 225), Color.White, Scene.font);
+
+            Engine.DrawString("     press 'up' twice to", new Vector2(1875 + scroll, 400), Color.White, Scene.font);
+            Engine.DrawString("         jump mid-air", new Vector2(1875 + scroll, 425), Color.White, Scene.font);
+
+            Engine.DrawString("       press 'alt' to kill", new Vector2(2800 + scroll, 200), Color.White, Scene.font);
+            Engine.DrawString(" enemies with your powers", new Vector2(2800 + scroll, 225), Color.White, Scene.font);
+
+            Engine.DrawString("you can use the powers once", new Vector2(2800 + scroll, 300), Color.White, Scene.font);
+
+            Engine.DrawString("collect enough points to", new Vector2(5105 + scroll, 350), Color.White, Scene.font);
+            Engine.DrawString("bring color to this world,", new Vector2(5105 + scroll, 375), Color.White, Scene.font);
+            Engine.DrawString("open the gates, and exit", new Vector2(5105 + scroll, 400), Color.White, Scene.font);
+            Engine.DrawString("         this realm", new Vector2(5105 + scroll, 425), Color.White, Scene.font);
+
+
+
         }
 
     }
