@@ -9,7 +9,7 @@ class Level
     public int scroll;
     public String envCoords;
     public String enemyFile;
-    public int color = 0;
+    public static int color = 0;
     public Boolean DoorOpen;
     public int minPoints;
     public int doorX;

@@ -81,7 +81,7 @@ class Scene
     static Level level1 = new Level(background1, numBlocksLevel1,
         "Assets/trial level coords.txt", "Assets/enemyCoordsL1.txt", 50, 5175, 500, -4275);
     static Level level2 = new Level(background2,numBlocksLevel2,
-        "Assets/env coords.txt", "Assets/level 1 enemies.txt", 150, 8300, 575, -7425);
+        "Assets/env coords.txt", "Assets/level 1 enemies.txt", 50, 8300, 575, -7425);
 
 
     static int screen = 0;
@@ -129,6 +129,8 @@ class Scene
             levelButtons(300,350, 1, lvl1);
             levelButtons(430, 350, 2, lvl2);
 
+            Level.color = 0;
+
         }
         //1st instructions screen
         else if (screen == 2)
@@ -153,7 +155,7 @@ class Scene
         //levels
         else if (screen == 4)
         {
-
+            
             if (numLevel == 1)
             {
                 UpdateLevel(level1);
@@ -168,6 +170,9 @@ class Scene
         //game over screen
         else if (screen == 5)
         {
+
+            Level.color = 0;
+
             if (win)
             {
                 screen++;
@@ -192,9 +197,19 @@ class Scene
             menuButtons();
             Engine.DrawTexture(done, Vector2.Zero);
             Engine.DrawString("High Score: " + player.highScore(), new Vector2(550, 300), Color.White, font);
+            Engine.DrawString("  Score: " + player.points, new Vector2(550, 500), Color.White, font);
             if (Engine.GetMouseButtonDown(MouseButton.Left))
             {
-                screen++;
+                if (numLevel == 2)
+                {
+                    screen = 4;
+                    level2.Reload(level2.envCoords);
+
+                }
+                else
+                {
+                    screen++;
+                }
             }
         }
 
@@ -420,7 +435,18 @@ class Scene
                     {
                         screen = 4;
                         numLevel = lvl;
-                    }
+
+                        if (lvl ==1)
+                        {
+                            level1.Reload(level1.envCoords);
+                        }
+
+                        else if (lvl == 2)
+                        {
+                            level2.Reload(level2.envCoords);
+                        }
+
+                }
                 }
                 else
                 {
@@ -471,11 +497,6 @@ class Scene
         {
             reload();
         }
-         
-        if (player.points > 100)
-        {
-            level.color = 1;
-        }
 
         level.Update();
         player.Update(level.scroll);
@@ -502,11 +523,27 @@ class Scene
             screen++;
         }
 
+        if ((player.kPos.X >= 5175 + level.scroll) &&
+            (player.kPos.X <= 5250 + level.scroll) &&
+            (player.kPos.Y >= 500) &&
+            (player.kPos.Y <= 600) &&
+            (level.DoorOpen) &&
+            (numLevel == 1))
+        {
+            win = true;
+            dead = true;
+            screen++;
+            numLevel++;
+
+            levels[1] = true;
+        }
+
         if ((player.kPos.X >= 8300 + level.scroll) &&
             (player.kPos.X <= 8375 + level.scroll) &&
             (player.kPos.Y >= 575) &&
             (player.kPos.Y <= 675) &&
-            level.DoorOpen)
+            (level.DoorOpen)&&
+            (numLevel == 2))
         {
             win = true;
             dead = true;
