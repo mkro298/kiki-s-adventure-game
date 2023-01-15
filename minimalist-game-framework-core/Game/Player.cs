@@ -59,7 +59,7 @@ class Player
     {
         if (usingPower)
         {
-            points += 50;
+            points += 50; 
         }
     }
 

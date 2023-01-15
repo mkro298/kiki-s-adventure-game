@@ -9,7 +9,7 @@ class EnemyManager
     Boolean[] levels;
     Player pl;
 
-    public EnemyManager(Player a, Boolean[] levelsParam)
+    public EnemyManager(Player a, Boolean[] levelsParam) 
     {
         pl = a;
         levels = levelsParam;
