@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 
 class Enemy
 {
@@ -25,6 +26,10 @@ class Enemy
     Boolean noTransfer = false;
     int framesDrawn = 0;
     int yCoord;
+
+    public Boolean flickering = false;
+    public int flick = 0;
+    public Boolean visible = true;
 
     int power = 0;
     Player pl;
@@ -71,26 +76,48 @@ class Enemy
 
         if (Math.Abs((enemyPos.X - 8 + scroll) - pl.kPos.X) < 70 && Math.Abs(enemyPos.Y - pl.kPos.Y) < 20)
         {
-            pl.enemyCollision();
-            if(enemyPos.X >= pl.kPos.X)
+            /* pl.enemyCollision();
+             if(enemyPos.X >= pl.kPos.X)
+             {
+                 pl.bounceBack = true;
+                 pl.kVel.X += 20 * Engine.TimeDelta + 5;
+                 pl.kVel.Y += Game.speed * 4;
+                 pl.kPos.X -= pl.kVel.X;
+                 pl.kPos.Y -= pl.kVel.Y;
+             }
+             else
+             {
+                 pl.bounceForward = true;
+             }
+            */
+            if (!flickering)
             {
-                pl.bounceBack = true;
-                pl.kVel.X += 20 * Engine.TimeDelta + 5;
-                pl.kVel.Y += Game.speed * 4;
-                pl.kPos.X -= pl.kVel.X;
-                pl.kPos.Y -= pl.kVel.Y;
-            }
-            else
-            {
-                pl.bounceForward = true;
-            }
+                pl.enemyCollision();
+                flickering = true;
+                flick = 0;
+            }                
         }
-        else
+        if (flickering)
+        {
+                flick++;
+                if (flick % 5 == 0)
+                {
+                    visible = !visible;
+                }
+                if (flick >= 500)
+                {
+                    flickering = false;
+                    flick = 0;
+                    visible = true;
+                }
+            
+        }
+       /* else
         {
             pl.bounceBack = false;
             pl.bounceBack = false;
         }
-
+       */
 
     }
 
@@ -129,6 +156,9 @@ class Enemy
         //draw sprite
         Vector2 eDrawPos = enemyPos + new Vector2(-8 + scroll, -8);
         TextureMirror eMirror = movingLeft ? TextureMirror.Horizontal : TextureMirror.None;
-        Engine.DrawTexture(spriteSheet, eDrawPos, source: eFrameBounds, mirror: eMirror);
+        if (visible)
+        {
+            Engine.DrawTexture(spriteSheet, eDrawPos, source: eFrameBounds, mirror: eMirror);
+        }
     }
 }
