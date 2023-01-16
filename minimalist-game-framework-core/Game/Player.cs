@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Security.Cryptography.X509Certificates;
 
 class Player 
 {
@@ -14,6 +15,7 @@ class Player
     //Load basic sprite sheet
     Texture tex = Engine.LoadTexture("basic.png");
     Texture powers = Engine.LoadTexture("powers.png");
+    Texture playerHit = Engine.LoadTexture("enemyHit.png");
     Texture texK = null;
 
     float frames = 6.0f;
@@ -43,6 +45,7 @@ class Player
     bool goBounce = false;
     public bool bounceBack = false;
     public bool bounceForward = false;
+    bool hit = false;
 
     // blocks array
     Block[] blocks;
@@ -66,6 +69,7 @@ class Player
     public void enemyCollision()
     {
         health += 100;
+        hit = true;
     }
 
     public String highScore()
@@ -231,6 +235,14 @@ class Player
             }
 
         }
+        if (hit)
+        {
+            texK = playerHit;
+            kIdle = false;
+            yCoord = 0;
+            frames = 7.0f;
+            bound = 100;
+        }
 
         // Advance through sprite's 6-frame animation and select the current frame
         kFrameIndex = (kFrameIndex + Engine.TimeDelta * Framerate) % frames;
@@ -238,6 +250,10 @@ class Player
         {
             usingPower = false; 
                 currP = -1;
+        }
+        if (kFrameIndex > 6 && hit)
+        {
+            hit = false;
         }
         Bounds2 kFrameBounds = new Bounds2(((int)kFrameIndex) * bound, kIdle ? 0 : yCoord, bound, 100);
         // Draw sprite

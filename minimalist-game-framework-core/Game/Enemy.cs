@@ -26,6 +26,7 @@ class Enemy
     Boolean noTransfer = false;
     int framesDrawn = 0;
     int yCoord;
+    public Boolean enemyDying = false;
 
     public Boolean flickering = false;
     public int flick = 0;
@@ -62,6 +63,7 @@ class Enemy
             spriteSheet = enemyDeath; 
             frames = 9;
             yCoord = 0;
+            enemyDying = true;
             
         }
         else if(!hit && pl.usingPower == true && Math.Abs((enemyPos.X - 8 + scroll) - pl.kPos.X) < 200 && Math.Abs(enemyPos.Y - pl.kPos.Y) < 80)
@@ -72,6 +74,7 @@ class Enemy
             frames = 9;
             yCoord = 0;
             noTransfer = true;
+            enemyDying = true;
         }
 
         if (Math.Abs((enemyPos.X - 8 + scroll) - pl.kPos.X) < 70 && Math.Abs(enemyPos.Y - pl.kPos.Y) < 20)
@@ -121,7 +124,15 @@ class Enemy
             movingLeft = true;
         }
         //animation
-        eFrameIndex = (eFrameIndex + Engine.TimeDelta * Framerate) % frames;
+        if (enemyDying)
+        {
+            eFrameIndex = 0;
+            enemyDying = false;
+        }
+        else
+        {
+            eFrameIndex = (eFrameIndex + Engine.TimeDelta * Framerate) % frames;
+        }
         if (eFrameIndex >= 8 && frames == 9)
         {
             isAlive = false;
