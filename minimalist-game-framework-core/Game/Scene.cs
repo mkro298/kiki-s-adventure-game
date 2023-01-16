@@ -181,8 +181,8 @@ class Scene
             {
                 
                 Engine.DrawTexture(gameover, Vector2.Zero);
-                Engine.DrawString("High Score: " + player.highScore(), new Vector2(550, 100), Color.White, font);
-                
+                Engine.DrawString("High Score: " + player.highScore(), new Vector2(570, 100), Color.White, font);
+                Engine.DrawString("Score: " + player.points, new Vector2(600, 150), Color.White, font);
                 if ((Engine.GetMouseButtonDown(MouseButton.Left)) && (!menuOpen))
                 {
                     screen = 4;
@@ -196,8 +196,8 @@ class Scene
         {
             menuButtons();
             Engine.DrawTexture(done, Vector2.Zero);
-            Engine.DrawString("High Score: " + player.highScore(), new Vector2(550, 300), Color.White, font);
-            Engine.DrawString("  Score: " + player.points, new Vector2(550, 500), Color.White, font);
+            Engine.DrawString("High Score: " + player.highScore(), new Vector2(570, 300), Color.White, font);
+            Engine.DrawString("Score: " + player.points, new Vector2(600, 400), Color.White, font);
             if (Engine.GetMouseButtonDown(MouseButton.Left))
             {
                 if (numLevel == 2)
