@@ -13,6 +13,9 @@ class Enemy
     readonly Texture enemyDeath = Engine.LoadTexture("ENEMY_DEATH.png");
     Texture spriteSheet;
 
+    //sound effect
+    static Sound breath = Engine.LoadSound("Inhale.mp3");
+
     int frames = 12;
 
     //enemy state
@@ -64,7 +67,8 @@ class Enemy
             frames = 9;
             yCoord = 0;
             enemyDying = true;
-            
+            Engine.PlaySound(breath);
+
         }
         else if(!hit && pl.usingPower == true && Math.Abs((enemyPos.X - 8 + scroll) - pl.kPos.X) < 200 && Math.Abs(enemyPos.Y - pl.kPos.Y) < 80)
         {
@@ -93,7 +97,7 @@ class Enemy
                 {
                     visible = !visible;
                 }
-                if (flick >= 200)
+                if (flick >= 100)
                 {
                     flickering = false;
                     flick = 0;

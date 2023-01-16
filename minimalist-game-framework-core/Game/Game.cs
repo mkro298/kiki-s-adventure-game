@@ -8,8 +8,7 @@ class Game
     public static readonly Vector2 Resolution = new Vector2(1275, 750);
 
     Boolean dead = true;
-    Double time = 0; 
-    Music music = Engine.LoadMusic("Kiki.mp3");
+    public static Music music = Engine.LoadMusic("Kiki.mp3");
     public static int speed = 5;
     
     static Block[] blocks;
@@ -31,16 +30,12 @@ class Game
 
         
         //plays music
-        if (time % 125.0 == 0)
-        {
-            Engine.PlayMusic(music);
-            time = 0;
-        } 
+        Engine.PlayMusic(music);
+            
     }
 
     public void Update()
     {
-        time += 0.016;
         Scene.Update();
     }
 }
