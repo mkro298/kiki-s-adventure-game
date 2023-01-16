@@ -11,7 +11,12 @@ class Player
     static readonly float Framerate = 10;
     static readonly float WalkSpeed = Game.speed;
 
-    
+    //sound effect
+    public static Sound heartbeat = Engine.LoadSound("Heartbeat.mp3");
+    static Sound attack = Engine.LoadSound("attack.mp3");
+    static Sound powerUp = Engine.LoadSound("power.mp3");
+
+
     //Load basic sprite sheet
     Texture tex = Engine.LoadTexture("basic.png");
     Texture powers = Engine.LoadTexture("powers.png");
@@ -237,6 +242,13 @@ class Player
         }
         if (hit)
         {
+            if (canMoveLeft)
+            {
+                kPos.X -= 10;
+            }else if (canMoveRight){
+                kPos.X += 10;
+            }
+
             texK = playerHit;
             kIdle = false;
             yCoord = 0;
@@ -248,11 +260,14 @@ class Player
         kFrameIndex = (kFrameIndex + Engine.TimeDelta * Framerate) % frames;
         if (kFrameIndex > 11 && usingPower)
         {
-            usingPower = false; 
-                currP = -1;
+            usingPower = false;
+            Engine.PlaySound(powerUp);
+            currP = -1;
         }
+
         if (kFrameIndex > 6 && hit)
         {
+            Engine.PlaySound(attack);
             hit = false;
         }
         Bounds2 kFrameBounds = new Bounds2(((int)kFrameIndex) * bound, kIdle ? 0 : yCoord, bound, 100);

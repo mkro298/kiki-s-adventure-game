@@ -10,6 +10,12 @@ class Scene
     static Boolean dead = true;
     static Boolean menuOpen = false; // tells us if menu is open or not
 
+
+    //music
+
+    static Sound click = Engine.LoadSound("Click.mp3");
+    static Sound victory = Engine.LoadSound("Win.mp3");
+
     //textures for screens
     static Texture start = Engine.LoadTexture("start.png");
     static Texture menu = Engine.LoadTexture("openMenu.png");
@@ -27,6 +33,11 @@ class Scene
     static Texture pg3 = Engine.LoadTexture("kiki pg3.png");
     static Texture pg4 = Engine.LoadTexture("kiki pg4.png");
     static Texture pg5 = Engine.LoadTexture("kiki pg5.png");
+
+    static Texture pg6 = Engine.LoadTexture("kiki6.png");
+    static Texture pg7 = Engine.LoadTexture("kiki7.png");
+    static Texture pg8 = Engine.LoadTexture("kiki8.png");
+    static Texture pg9 = Engine.LoadTexture("kiki9.png");
 
     static Texture healthSheet = Engine.LoadTexture("Health.png");
 
@@ -72,6 +83,8 @@ class Scene
                                               Engine.LoadTexture("fire cliffs.png")};
 
     static public Font font = Engine.LoadFont("font.ttf", 20);
+    static public Font font1 = Engine.LoadFont("font.ttf", 40);
+
     static int numBlocksLevel1 = 124;
     static int numBlocksLevel2 = 202;
 
@@ -181,8 +194,8 @@ class Scene
             {
                 
                 Engine.DrawTexture(gameover, Vector2.Zero);
-                Engine.DrawString("High Score: " + player.highScore(), new Vector2(570, 100), Color.White, font);
-                Engine.DrawString("Score: " + player.points, new Vector2(600, 150), Color.White, font);
+                Engine.DrawString("High Score: " + player.highScore(), new Vector2(520, 250), Color.White, font1);
+                Engine.DrawString("  Score: " + player.points, new Vector2(550, 310), Color.White, font1);
                 if ((Engine.GetMouseButtonDown(MouseButton.Left)) && (!menuOpen))
                 {
                     screen = 4;
@@ -194,10 +207,11 @@ class Scene
         //level complete screen (end screen)
         else if (screen == 6)
         {
+
             menuButtons();
             Engine.DrawTexture(done, Vector2.Zero);
-            Engine.DrawString("High Score: " + player.highScore(), new Vector2(570, 300), Color.White, font);
-            Engine.DrawString("Score: " + player.points, new Vector2(600, 400), Color.White, font);
+            Engine.DrawString("High Score: " + player.highScore(), new Vector2(520, 300), Color.White, font1);
+            Engine.DrawString(" Score: " + player.points, new Vector2(550, 400), Color.White, font1);
             if (Engine.GetMouseButtonDown(MouseButton.Left))
             {
                 if (numLevel == 2)
@@ -208,19 +222,8 @@ class Scene
                 }
                 else
                 {
-                    screen++;
+                    screen = 13;
                 }
-            }
-        }
-
-        //end screen
-        else if (screen == 7)
-        {
-            menuButtons();
-            Engine.DrawTexture(credits, Vector2.Zero);
-            if (Engine.GetMouseButtonDown(MouseButton.Left))
-            {
-                screen = 0;
             }
         }
         
@@ -257,7 +260,42 @@ class Scene
         else if (screen == 12)
         {
             Engine.DrawTexture(pg5, Vector2.Zero);
-            button(back, 30, 355, 40, 40, 2);
+            button(back, 30, 355, 40, 40, 11);
+            menuButtons();
+            button(exitButton, 1205, 20, 40, 40, 1);
+        }
+        else if (screen == 13)
+        {
+            Engine.DrawTexture(pg6, Vector2.Zero);
+            arrowButtons();
+            menuButtons();
+        }
+        else if (screen == 14)
+        {
+            Engine.DrawTexture(pg7, Vector2.Zero);
+            arrowButtons();
+            menuButtons();
+            
+        }
+        else if (screen == 15)
+        {
+            Engine.DrawTexture(pg8, Vector2.Zero);
+            arrowButtons();
+            menuButtons();
+            
+        }
+        else if (screen == 16)
+        {
+            Engine.DrawTexture(pg9, Vector2.Zero);
+            arrowButtons();
+            menuButtons();
+
+        }
+        
+        //end screen
+        else if (screen == 17)
+        {
+            Engine.DrawTexture(credits, Vector2.Zero);
             menuButtons();
             button(exitButton, 1205, 20, 40, 40, 1);
         }
@@ -284,6 +322,7 @@ class Scene
             {
                 screen = i;
                 menuOpen = false;
+                Engine.PlaySound(click);
             }
         }
         else
@@ -311,6 +350,7 @@ class Scene
             {
                 screen--;
                 menuOpen = false;
+                Engine.PlaySound(click);
             }
         }
         else
@@ -326,6 +366,7 @@ class Scene
             {
                 screen++;
                 menuOpen = false;
+                Engine.PlaySound(click);
             }
         }
         else
@@ -357,6 +398,8 @@ class Scene
             mBound = new Bounds2(40, 0, 40, 40);
             if (Engine.GetMouseButtonDown(MouseButton.Left) || Engine.GetMouseButtonDown(MouseButton.Right))
             {
+
+                Engine.PlaySound(click);
                 if (menuOpen)
                 {
                     menuOpen = false;
@@ -391,6 +434,7 @@ class Scene
             {
                 menuOpen = false;
                 screen = 1;
+                Engine.PlaySound(click);
             }
 
             //instructions button
@@ -399,6 +443,7 @@ class Scene
             {
                 menuOpen = false;
                 screen = 2;
+                Engine.PlaySound(click);
             }
 
             //story button
@@ -407,6 +452,7 @@ class Scene
             {
                 menuOpen = false;
                 screen = 8;
+                Engine.PlaySound(click);
             }
 
             //quit button (goes to start screen)
@@ -415,6 +461,7 @@ class Scene
             {
                 menuOpen = false;
                 screen = 0;
+                Engine.PlaySound(click);
             }
         }
 
@@ -433,6 +480,8 @@ class Scene
                     bound = new Bounds2(100, 0, 100, 100);
                     if (Engine.GetMouseButtonDown(MouseButton.Left) || Engine.GetMouseButtonDown(MouseButton.Right))
                     {
+
+                        Engine.PlaySound(click);
                         screen = 4;
                         numLevel = lvl;
 
@@ -503,13 +552,14 @@ class Scene
         enemyManager.Update(level.scroll);
 
         menuButtons();
-        Engine.DrawString("Current Score: " + player.points.ToString(),
+        Engine.DrawString("Current Score: " + player.points.ToString() + "/" + level.minPoints,
                             new Vector2(1000, 50), Color.White, font);
         Bounds2 hFrameBounds = new Bounds2(((int)(player.health / 100)) * 110, 0, 110, 20);
         Engine.DrawTexture(healthSheet, new Vector2(985, 80), source: hFrameBounds, size: new Vector2(220, 40));
 
         if (player.getKPosition().Y >= 1000)
         {
+            Engine.PlaySound(Player.heartbeat);
             dead = true;
         }
         if (player.health >= 500)
@@ -534,6 +584,7 @@ class Scene
             dead = true;
             screen++;
             numLevel++;
+            Engine.PlaySound(victory);
 
             levels[1] = true;
         }
@@ -549,6 +600,8 @@ class Scene
             dead = true;
             screen++;
             numLevel++;
+            Engine.PlaySound(victory);
+
         }
 
     }
