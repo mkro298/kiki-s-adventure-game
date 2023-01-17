@@ -76,7 +76,7 @@ class Scene
     static int numBlocksLevel2 = 202;
 
     public static Block[] blocks;
-    public static Player player = new Player(blocks);
+    public static Player player = new Player(blocks, numLevel);
     static EnemyManager enemyManager;
     static Level level1 = new Level(background1, numBlocksLevel1,
         "Assets/trial level coords.txt", "Assets/enemyCoordsL1.txt", 50, 5175, 500, -4275);
@@ -486,7 +486,7 @@ class Scene
         {
             dead = false;
             level.scroll = 0;
-            player = new Player(blocks);
+            player = new Player(blocks, numLevel);
             player.kPos.X = 260;
             player.kPos.Y = Resolution.Y / 2;
             enemyManager = new EnemyManager(player, levels);

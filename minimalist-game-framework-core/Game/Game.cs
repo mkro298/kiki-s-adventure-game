@@ -13,7 +13,7 @@ class Game
     public static int speed = 5;
     
     static Block[] blocks;
-    Player player = new Player(blocks);
+    Player player = new Player(blocks, 1);
     Scene scene = new Scene();
 
     EnemyManager enemyManager;
