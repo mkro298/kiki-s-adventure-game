@@ -51,15 +51,19 @@ class Player
     public bool bounceBack = false;
     public bool bounceForward = false;
     bool hit = false;
+    int level;
+
+    StreamReader sr;
 
     // blocks array
     Block[] blocks;
 
     public Player() { }
 
-    public Player(Block[] blocksArray)
+    public Player(Block[] blocksArray, int l)
     {
         blocks = blocksArray;
+        level = l;
     }
 
     //assumes enemy is hit by player through powers or through inhaling 
@@ -80,12 +84,26 @@ class Player
     public String highScore()
     {
         Engine.reload();
-        StreamReader sr = new StreamReader("assets/highScore.txt");
+        if (level == 1)
+        {
+            sr = new StreamReader("assets/highScore1.txt");
+        }
+        else
+        {
+            sr = new StreamReader("assets/highScore2.txt");
+        }
         int highScore = int.Parse(sr.ReadLine());
         sr.Close();
         if (points > highScore)
         {
-            File.WriteAllTextAsync("assets/highScore.txt", points.ToString());
+            if (level == 1)
+            {
+                File.WriteAllTextAsync("assets/highScore1.txt", points.ToString());
+            }
+            else
+            {
+                File.WriteAllTextAsync("assets/highScore2.txt", points.ToString());
+            }
             return points.ToString();
         }
         return highScore.ToString();

@@ -110,7 +110,10 @@ class Enemy
     public void runEnemyCode(int scroll) 
     {
         //enemyPos.X += scroll;
-        hitPlayer(scroll);
+        if (!hit)
+        {
+            hitPlayer(scroll);
+        }
         if (movingLeft)
         {
             enemyPos.X -= WalkSpeed;
