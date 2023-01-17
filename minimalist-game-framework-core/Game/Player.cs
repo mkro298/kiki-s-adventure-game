@@ -62,12 +62,16 @@ class Player
     }
 
     //assumes enemy is hit by player through powers or through inhaling 
-    public void enemyHit(Enemy a)
+    public void enemyHitP()
     {
         if (usingPower)
         {
             points += 50; 
         }
+    }
+    public void enemyHitI()
+    {
+        points += 20;
     }
 
     public void enemyCollision()
