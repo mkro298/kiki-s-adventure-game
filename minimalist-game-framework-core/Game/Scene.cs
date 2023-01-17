@@ -210,8 +210,8 @@ class Scene
 
             menuButtons();
             Engine.DrawTexture(done, Vector2.Zero);
-            Engine.DrawString("High Score: " + player.highScore(), new Vector2(520, 300), Color.White, font1);
-            Engine.DrawString(" Score: " + player.points, new Vector2(550, 400), Color.White, font1);
+            Engine.DrawString("High Score: " + player.highScore(), new Vector2(520, 250), Color.White, font1);
+            Engine.DrawString(" Score: " + player.points, new Vector2(550, 330), Color.White, font1);
             if (Engine.GetMouseButtonDown(MouseButton.Left))
             {
                 if (numLevel == 2)
@@ -573,7 +573,7 @@ class Scene
             screen++;
         }
 
-        if ((player.kPos.X >= 5175 + level.scroll) &&
+        if ((player.kPos.X >= 5100 + level.scroll) &&
             (player.kPos.X <= 5250 + level.scroll) &&
             (player.kPos.Y >= 500) &&
             (player.kPos.Y <= 600) &&
@@ -589,7 +589,7 @@ class Scene
             levels[1] = true;
         }
 
-        if ((player.kPos.X >= 8300 + level.scroll) &&
+        if ((player.kPos.X >= 8225 + level.scroll) &&
             (player.kPos.X <= 8375 + level.scroll) &&
             (player.kPos.Y >= 575) &&
             (player.kPos.Y <= 675) &&
