@@ -94,7 +94,7 @@ class Scene
     static Level level1 = new Level(background1, numBlocksLevel1,
         "Assets/trial level coords.txt", "Assets/enemyCoordsL1.txt", 50, 5175, 500, -4275);
     static Level level2 = new Level(background2,numBlocksLevel2,
-        "Assets/env coords.txt", "Assets/level 1 enemies.txt", 50, 8300, 575, -7425);
+        "Assets/env coords.txt", "Assets/enemyCoordsL2.txt", 100, 8300, 575, -7425);
 
 
     static int screen = 0;
