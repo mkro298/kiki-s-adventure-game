@@ -60,15 +60,7 @@ class Scene
     static Texture lvl1 = Engine.LoadTexture("level1.png");
     static Texture lvl2 = Engine.LoadTexture("level2.png");
     
-    public static Boolean [] levels = 
-    { 
-        true,
-#if DEBUG
-        true
-#else
-        false
-#endif
-    };
+    public static Boolean [] levels = { true, false};
 
     //textures for instructions during the trial level
     static Texture jump = Engine.LoadTexture("jump.png");
@@ -277,6 +269,8 @@ class Scene
             menuButtons();
             button(exitButton, 1205, 20, 40, 40, 1);
         }
+        
+        //end of story
         else if (screen == 13)
         {
             Engine.DrawTexture(pg6, Vector2.Zero);
@@ -313,7 +307,7 @@ class Scene
             button(exitButton, 1205, 20, 40, 40, 1);
         }
 
-
+        //opens dropdown menu
         if (menuOpen)
         {
 
@@ -322,6 +316,7 @@ class Scene
         }
     }
 
+    //generic button method
     public static void button(Texture image, int x, int y, int width, int height, int i)
     {
         Vector2 mouse = Engine.MousePosition;
@@ -479,6 +474,8 @@ class Scene
         }
 
     }
+    
+    //level buttons (level menu)
     public static void levelButtons(int x, int y, int lvl, Texture image)
     {
         Vector2 mouse = Engine.MousePosition;
@@ -524,8 +521,7 @@ class Scene
 
      }
 
-     
-
+    //creates each level
     public static void reload()
     {
         Engine.reload();
@@ -542,6 +538,7 @@ class Scene
         sr.Close();
     }
 
+    //updates screen during gameplay
     private static void UpdateLevel(Level level)
     {
         if (dead)
@@ -570,6 +567,7 @@ class Scene
         Bounds2 hFrameBounds = new Bounds2(((int)(player.health / 100)) * 110, 0, 110, 20);
         Engine.DrawTexture(healthSheet, new Vector2(985, 80), source: hFrameBounds, size: new Vector2(220, 40));
 
+        //conditions in which player is dead
         if (player.getKPosition().Y >= 1000)
         {
             Engine.PlaySound(Player.heartbeat);
@@ -586,6 +584,8 @@ class Scene
             screen++;
         }
 
+
+        //checks if player reaches gate
         if ((player.kPos.X >= 5100 + level.scroll) &&
             (player.kPos.X <= 5250 + level.scroll) &&
             (player.kPos.Y >= 500) &&
