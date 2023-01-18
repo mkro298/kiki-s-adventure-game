@@ -202,7 +202,11 @@ class Player
         // For moving up
         if (Engine.GetKeyDown(Key.Up) && canMoveUp && jumps < 2)
         {
+            kVel.Y *= 0.25f;
             kVel.Y += WalkSpeed * WalkSpeed * WalkSpeed / 6;
+
+            kVel.Y = Math.Min(kVel.Y, 20.0f);
+
             kIdle = false;
             yCoord = 200;
             frames = 6.0f;
