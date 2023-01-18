@@ -60,7 +60,6 @@ class Enemy
         //checks if player inhaled enemy 
         if (!hit&&pl.inhale == true && Math.Abs((enemyPos.X-8+scroll)-pl.kPos.X)<150 && Math.Abs(enemyPos.Y-pl.kPos.Y)<80)
         {
-            pl.enemyHitI();
             hit = true;
             spriteSheet = enemyDeath; 
             frames = 9;
@@ -72,7 +71,7 @@ class Enemy
         //checks if player used power on enemy 
         else if(!hit && pl.usingPower == true && Math.Abs((enemyPos.X - 8 + scroll) - pl.kPos.X) < 200 && Math.Abs(enemyPos.Y - pl.kPos.Y) < 80)
         {
-            pl.enemyHitP();
+            pl.enemyHit();
             hit = true;
             spriteSheet = enemyDeath;
             frames = 9;

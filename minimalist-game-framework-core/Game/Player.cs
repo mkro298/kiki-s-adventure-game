@@ -72,18 +72,12 @@ class Player
     }
 
     //assumes enemy is hit by player through powers and increases points 
-    public void enemyHitP()
+    public void enemyHit()
     {
         if (usingPower)
         {
             points += 50; 
         }
-    }
-
-    //assumes enemy is hit by player through inhaling and increases points 
-    public void enemyHitI()
-    {
-        points += 20;
     }
 
     //assumes player collided with enemy and takes one life 
