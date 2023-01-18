@@ -22,11 +22,10 @@ class Enemy
     Vector2 enemyPos;
     Boolean movingLeft = false;
     float eFrameIndex = 0;
-    Boolean enemyHit = false;
+
     public Boolean isAlive = true;
     public Boolean hit = false;
     Boolean noTransfer = false;
-    int framesDrawn = 0;
     int yCoord;
     public Boolean enemyDying = false;
     public Boolean flickering = false;
@@ -34,7 +33,7 @@ class Enemy
     public Boolean visible = true;
     int power = 0;
     Player pl;
-    int time = 0;
+
     int minX;
     int maxX;
     int yPos;
@@ -56,9 +55,9 @@ class Enemy
     public void hitPlayer(int scroll)
     { 
         //checks if it was hit using inhale
+
         if (!hit&&pl.inhale == true && Math.Abs((enemyPos.X-8+scroll)-pl.kPos.X)<150 && Math.Abs(enemyPos.Y-pl.kPos.Y)<80)
         {
-            pl.enemyHit(this);
             hit = true;
             spriteSheet = enemyDeath; 
             frames = 9;
@@ -68,10 +67,12 @@ class Enemy
 
         }
 
+
         //checks if it was hit using a power
+
         else if(!hit && pl.usingPower == true && Math.Abs((enemyPos.X - 8 + scroll) - pl.kPos.X) < 200 && Math.Abs(enemyPos.Y - pl.kPos.Y) < 80)
         {
-            pl.enemyHit(this);
+            pl.enemyHit();
             hit = true;
             spriteSheet = enemyDeath;
             frames = 9;
@@ -80,7 +81,8 @@ class Enemy
             enemyDying = true;
         }
 
-        //checks if the player didn't try to kill enemy but collided
+        //checks if player touched enemy and makes enemy flicker and stop all damage to player for a couple seconds 
+
         if (Math.Abs((enemyPos.X - 8 + scroll) - pl.kPos.X) < 70 && Math.Abs(enemyPos.Y - pl.kPos.Y) < 20)
         {
             if (!flickering)
@@ -109,10 +111,14 @@ class Enemy
         }
     }
 
+    //main enemy update loop 
     public void runEnemyCode(int scroll) 
     {
         //enemyPos.X += scroll;
-        hitPlayer(scroll);
+        if (!hit)
+        {
+            hitPlayer(scroll);
+        }
         if (movingLeft)
         {
             enemyPos.X -= WalkSpeed;  //move enemy to left bound

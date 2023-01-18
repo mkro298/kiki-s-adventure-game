@@ -8,6 +8,7 @@ class EnemyManager
     List<Enemy> enemies = new List<Enemy>();
     Boolean[] levels;
     Player pl;
+    Random rand = new Random();
 
     //constructor
     public EnemyManager(Player a, Boolean[] levelsParam) 
@@ -29,6 +30,7 @@ class EnemyManager
             //first level enemies
             if (levels[0] == true)
             {
+
                 enemies.Add(new Enemy(Int32.Parse(nums[0]), pl, Int32.Parse(nums[1]), Int32.Parse(nums[2]), Int32.Parse(nums[3])));
             } 
             
@@ -36,6 +38,7 @@ class EnemyManager
             else if (levels[1] == true)
             { 
                 enemies.Add(new Enemy(Int32.Parse(nums[0]), pl, Int32.Parse(nums[1]), Int32.Parse(nums[2]), Int32.Parse(nums[3])));
+
             }
             
         }

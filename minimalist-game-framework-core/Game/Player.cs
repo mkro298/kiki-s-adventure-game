@@ -16,6 +16,8 @@ class Player
     static Sound attack = Engine.LoadSound("attack.mp3");
     static Sound powerUp = Engine.LoadSound("power.mp3");
 
+    //Indicator texture
+    Texture indicator = Engine.LoadTexture("Indicator.png");
 
     //Load basic sprite sheet
     Texture tex = Engine.LoadTexture("basic.png");
@@ -23,8 +25,11 @@ class Player
     Texture playerHit = Engine.LoadTexture("enemyHit.png");
     Texture texK = null;
 
+    //display info 
     float frames = 6.0f;
     int bound = 100;
+
+    //current player power 
     public int currP = -1;
 
 
@@ -51,19 +56,23 @@ class Player
     public bool bounceBack = false;
     public bool bounceForward = false;
     bool hit = false;
+    int level;
+
+    StreamReader sr;
 
     // blocks array
     Block[] blocks;
 
     public Player() { }
 
-    public Player(Block[] blocksArray)
+    public Player(Block[] blocksArray, int l)
     {
         blocks = blocksArray;
+        level = l;
     }
 
-    //assumes enemy is hit by player through powers or through inhaling 
-    public void enemyHit(Enemy a)
+    //assumes enemy is hit by player through powers and increases points 
+    public void enemyHit()
     {
         if (usingPower)
         {
@@ -71,32 +80,56 @@ class Player
         }
     }
 
+    //assumes player collided with enemy and takes one life 
     public void enemyCollision()
     {
         health += 100;
         hit = true;
     }
 
+    //returns overall high score for the level 
     public String highScore()
     {
         Engine.reload();
-        StreamReader sr = new StreamReader("assets/highScore.txt");
+        //stores the high score on a seperate file for each level 
+        if (level == 1)
+        {
+            sr = new StreamReader("assets/highScore1.txt");
+        }
+        else
+        {
+            sr = new StreamReader("assets/highScore2.txt");
+        }
         int highScore = int.Parse(sr.ReadLine());
         sr.Close();
+        //checks if current score beat high score 
         if (points > highScore)
         {
-            File.WriteAllTextAsync("assets/highScore.txt", points.ToString());
+            if (level == 1)
+            {
+                File.WriteAllTextAsync("assets/highScore1.txt", points.ToString());
+            }
+            else
+            {
+                File.WriteAllTextAsync("assets/highScore2.txt", points.ToString());
+            }
             return points.ToString();
         }
         return highScore.ToString();
     }
+
+    //main update loop 
     public void Update(int scroll)
     {
+        //resets player state 
         inhale = false;
         texK = tex;
         bool kIdle = true;
         frames = 6.0f;
         bound = 100;
+
+        //draws circle that shows current power 
+        Engine.DrawTexture(indicator, new Vector2(910, 50), source: new Bounds2((currP + 1) * 60, 0, 60, 60));
 
         canMoveLeft = true;
         canMoveRight = true;
@@ -230,6 +263,7 @@ class Player
             bound = 100;
             inhale = true;
         } 
+        //for using power 
         if (usingPower||((Engine.GetKeyDown(Key.LeftAlt)|| Engine.GetKeyDown(Key.RightAlt)) &&currP!=-1))
         {
             texK = powers;
@@ -244,6 +278,7 @@ class Player
             }
 
         }
+        //bounceback when enemy hit 
         if (hit)
         {
             if (canMoveLeft)

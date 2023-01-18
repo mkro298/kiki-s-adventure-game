@@ -98,14 +98,16 @@ class Scene
     static int numBlocksLevel2 = 202;
 
     public static Block[] blocks;
-    public static Player player = new Player(blocks);
+    public static Player player = new Player(blocks, numLevel);
     static EnemyManager enemyManager;
 
     //creates the levels
     static Level level1 = new Level(background1, numBlocksLevel1,
         "Assets/trial level coords.txt", "Assets/enemyCoordsL1.txt", 100, 5175, 500, -4275);
     static Level level2 = new Level(background2,numBlocksLevel2,
+
         "Assets/env coords.txt", "Assets/enemyCoordsL2.txt", 150, 8300, 575, -7425);
+
 
 
     static int screen = 0;
@@ -221,8 +223,8 @@ class Scene
 
             menuButtons();
             Engine.DrawTexture(done, Vector2.Zero);
-            Engine.DrawString("High Score: " + player.highScore(), new Vector2(520, 300), Color.White, font1);
-            Engine.DrawString(" Score: " + player.points, new Vector2(550, 400), Color.White, font1);
+            Engine.DrawString("High Score: " + player.highScore(), new Vector2(520, 250), Color.White, font1);
+            Engine.DrawString(" Score: " + player.points, new Vector2(550, 330), Color.White, font1);
             if (Engine.GetMouseButtonDown(MouseButton.Left))
             {
                 if (numLevel == 2)
@@ -546,7 +548,7 @@ class Scene
         {
             dead = false;
             level.scroll = 0;
-            player = new Player(blocks);
+            player = new Player(blocks, numLevel);
             player.kPos.X = 260;
             player.kPos.Y = Resolution.Y / 2;
             enemyManager = new EnemyManager(player, levels);
@@ -584,7 +586,7 @@ class Scene
             screen++;
         }
 
-        if ((player.kPos.X >= 5175 + level.scroll) &&
+        if ((player.kPos.X >= 5100 + level.scroll) &&
             (player.kPos.X <= 5250 + level.scroll) &&
             (player.kPos.Y >= 500) &&
             (player.kPos.Y <= 600) &&
@@ -600,7 +602,7 @@ class Scene
             levels[1] = true;
         }
 
-        if ((player.kPos.X >= 8300 + level.scroll) &&
+        if ((player.kPos.X >= 8225 + level.scroll) &&
             (player.kPos.X <= 8375 + level.scroll) &&
             (player.kPos.Y >= 575) &&
             (player.kPos.Y <= 675) &&
