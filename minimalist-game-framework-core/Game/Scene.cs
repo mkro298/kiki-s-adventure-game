@@ -100,6 +100,8 @@ class Scene
     public static Block[] blocks;
     public static Player player = new Player(blocks);
     static EnemyManager enemyManager;
+
+    //creates the levels
     static Level level1 = new Level(background1, numBlocksLevel1,
         "Assets/trial level coords.txt", "Assets/enemyCoordsL1.txt", 100, 5175, 500, -4275);
     static Level level2 = new Level(background2,numBlocksLevel2,

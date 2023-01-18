@@ -20,7 +20,7 @@ class EnemyManager
     public void initializeEnemies(String file)
     {
         enemies.Clear();
-        StreamReader sr = new StreamReader(file);  //read enemy datta in from a file
+        StreamReader sr = new StreamReader(file);  //read enemy data in from a file
         while (!sr.EndOfStream)
         {
             string line = sr.ReadLine();

@@ -52,7 +52,7 @@ class Enemy
         enemyPos = new Vector2(minX, yPos);
     }
 
-    //checks if enemy has collided with player
+    //checks if the enemy has collided with player
     public void hitPlayer(int scroll)
     { 
         //checks if it was hit using inhale
