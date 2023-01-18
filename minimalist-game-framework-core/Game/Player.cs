@@ -16,6 +16,8 @@ class Player
     static Sound attack = Engine.LoadSound("attack.mp3");
     static Sound powerUp = Engine.LoadSound("power.mp3");
 
+    //Indicator texture
+    Texture indicator = Engine.LoadTexture("Indicator.png");
 
     //Load basic sprite sheet
     Texture tex = Engine.LoadTexture("basic.png");
@@ -97,6 +99,8 @@ class Player
         bool kIdle = true;
         frames = 6.0f;
         bound = 100;
+
+        Engine.DrawTexture(indicator, new Vector2(910, 50), source: new Bounds2((currP + 1) * 60, 0, 60, 60));
 
         canMoveLeft = true;
         canMoveRight = true;

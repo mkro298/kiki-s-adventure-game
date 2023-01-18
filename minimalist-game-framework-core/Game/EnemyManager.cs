@@ -8,6 +8,7 @@ class EnemyManager
     List<Enemy> enemies = new List<Enemy>();
     Boolean[] levels;
     Player pl;
+    Random rand = new Random();
 
     public EnemyManager(Player a, Boolean[] levelsParam) 
     {
@@ -25,14 +26,14 @@ class EnemyManager
             string[] nums = line.Split(' ');
             if (levels[0] == true)
             {
-                enemies.Add(new Enemy(Int32.Parse(nums[0]), pl, Int32.Parse(nums[1]), Int32.Parse(nums[2]), Int32.Parse(nums[3])));
+                enemies.Add(new Enemy(rand.Next(0, 5), pl, Int32.Parse(nums[1]), Int32.Parse(nums[2]), Int32.Parse(nums[3])));
             } else if (levels[1] == true)
             { 
                 while(enemies.Count > 0)
                 {
                     enemies.RemoveAt(0);
                 }
-                enemies.Add(new Enemy(Int32.Parse(nums[0]), pl, Int32.Parse(nums[1]), Int32.Parse(nums[2]), Int32.Parse(nums[3])));
+                enemies.Add(new Enemy(rand.Next(0, 5), pl, Int32.Parse(nums[1]), Int32.Parse(nums[2]), Int32.Parse(nums[3])));
             }
             
         }
