@@ -28,20 +28,17 @@ class Enemy
     Boolean noTransfer = false;
     int yCoord;
     public Boolean enemyDying = false;
-
     public Boolean flickering = false;
     public int flick = 0;
     public Boolean visible = true;
-
     int power = 0;
     Player pl;
-
 
     int minX;
     int maxX;
     int yPos;
 
-
+    //constructor
     public Enemy(int p, Player a, int minX, int maxX, int yPos)
     {
         power = p;
@@ -54,10 +51,11 @@ class Enemy
         enemyPos = new Vector2(minX, yPos);
     }
 
-    //checks if player hit enemy 
+    //checks if the enemy has collided with player
     public void hitPlayer(int scroll)
     { 
-        //checks if player inhaled enemy 
+        //checks if it was hit using inhale
+
         if (!hit&&pl.inhale == true && Math.Abs((enemyPos.X-8+scroll)-pl.kPos.X)<150 && Math.Abs(enemyPos.Y-pl.kPos.Y)<80)
         {
             hit = true;
@@ -68,7 +66,10 @@ class Enemy
             Engine.PlaySound(breath);
 
         }
-        //checks if player used power on enemy 
+
+
+        //checks if it was hit using a power
+
         else if(!hit && pl.usingPower == true && Math.Abs((enemyPos.X - 8 + scroll) - pl.kPos.X) < 200 && Math.Abs(enemyPos.Y - pl.kPos.Y) < 80)
         {
             pl.enemyHit();
@@ -79,7 +80,9 @@ class Enemy
             noTransfer = true;
             enemyDying = true;
         }
+
         //checks if player touched enemy and makes enemy flicker and stop all damage to player for a couple seconds 
+
         if (Math.Abs((enemyPos.X - 8 + scroll) - pl.kPos.X) < 70 && Math.Abs(enemyPos.Y - pl.kPos.Y) < 20)
         {
             if (!flickering)
@@ -89,6 +92,8 @@ class Enemy
                 flick = 0;
             }                
         }
+
+        //makes it flicker
         if (flickering)
         {
                 flick++;
@@ -116,20 +121,21 @@ class Enemy
         }
         if (movingLeft)
         {
-            enemyPos.X -= WalkSpeed;
+            enemyPos.X -= WalkSpeed;  //move enemy to left bound
         }
         else
         {
-            enemyPos.X += WalkSpeed;
+            enemyPos.X += WalkSpeed;  //move enemy to right bound
         }
         if (enemyPos.X == minX)
         {
-            movingLeft = false;
+            movingLeft = false;  //switch direction to right
         }
         if (enemyPos.X == maxX)
         {
-            movingLeft = true;
+            movingLeft = true;  //switch direction to left
         }
+        
         //animation
         if (enemyDying)
         {

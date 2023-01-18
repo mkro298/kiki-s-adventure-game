@@ -59,7 +59,16 @@ class Scene
     //level buttons
     static Texture lvl1 = Engine.LoadTexture("level1.png");
     static Texture lvl2 = Engine.LoadTexture("level2.png");
-    public static Boolean [] levels = { true, false };
+    
+    public static Boolean [] levels = 
+    { 
+        true,
+#if DEBUG
+        true
+#else
+        false
+#endif
+    };
 
     //textures for instructions during the trial level
     static Texture jump = Engine.LoadTexture("jump.png");
@@ -91,10 +100,14 @@ class Scene
     public static Block[] blocks;
     public static Player player = new Player(blocks, numLevel);
     static EnemyManager enemyManager;
+
+    //creates the levels
     static Level level1 = new Level(background1, numBlocksLevel1,
-        "Assets/trial level coords.txt", "Assets/enemyCoordsL1.txt", 50, 5175, 500, -4275);
+        "Assets/trial level coords.txt", "Assets/enemyCoordsL1.txt", 100, 5175, 500, -4275);
     static Level level2 = new Level(background2,numBlocksLevel2,
-        "Assets/env coords.txt", "Assets/enemyCoordsL2.txt", 100, 8300, 575, -7425);
+
+        "Assets/env coords.txt", "Assets/enemyCoordsL2.txt", 150, 8300, 575, -7425);
+
 
 
     static int screen = 0;
